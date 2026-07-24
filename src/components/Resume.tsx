@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdArrowBack, MdPrint } from "react-icons/md";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { smoother } from "./Navbar";
@@ -20,6 +20,9 @@ import "./styles/Resume.css";
 
 const Resume = () => {
   const [open, setOpen] = useState(false);
+  // Remembers the scroll offset while the résumé is open so we can restore it
+  // exactly when the overlay closes.
+  const savedScrollY = useRef(0);
 
   // Open when the RESUME button (in SocialIcons) dispatches the event, or if
   // arriving via a shareable ?resume link.
@@ -35,51 +38,33 @@ const Resume = () => {
   // Lock scrolling while open and allow Esc to close.
   //
   // The site scrolls via GSAP ScrollSmoother (a transform on #smooth-content).
-  // Previously we PAUSED the smoother while the résumé was open, but calling
-  // `paused(true)` / `paused(false)` reliably WEDGED the smoother — after the
-  // résumé closed the page could no longer scroll.
+  // The ONLY reliable way to freeze/restore it is ScrollSmoother's own
+  // `paused()` API — toggling any CSS on #smooth-wrapper (position/overflow/top)
+  // fights ScrollSmoother's inline styles and leaves the page unable to scroll
+  // after the overlay closes (the bug we kept hitting).
   //
-  // The robust fix is to NOT pause the smoother at all. Instead we freeze the
-  // scroll wrapper in place with `position: fixed` for the duration of the
-  // overlay (remembering the current scroll offset), then restore it on close.
-  // Because the smoother's own RAF/observers are never touched, scrolling is
-  // always fully functional again the instant the résumé closes.
+  // So: on open we pause the smoother (and remember the offset); on close we
+  // unpause, re-apply the remembered offset and refresh triggers. Because we
+  // never touch the wrapper's layout, scrolling always works again immediately.
   useEffect(() => {
-    const wrapper = document.getElementById("smooth-wrapper");
-
     const lock = () => {
-      const y = smoother ? smoother.scrollTop() : window.scrollY;
-      document.body.dataset.resumeScrollY = String(y);
-      document.body.style.overflow = "hidden";
-      if (wrapper) {
-        wrapper.style.position = "fixed";
-        wrapper.style.top = `-${y}px`;
-        wrapper.style.left = "0";
-        wrapper.style.right = "0";
-        wrapper.style.width = "100%";
+      if (!smoother) return;
+      try {
+        savedScrollY.current = smoother.scrollTop();
+        smoother.paused(true);
+      } catch {
+        /* no-op */
       }
     };
 
     const unlock = () => {
-      document.body.style.overflow = "";
-      if (wrapper) {
-        wrapper.style.position = "";
-        wrapper.style.top = "";
-        wrapper.style.left = "";
-        wrapper.style.right = "";
-        wrapper.style.width = "";
-      }
-      const y = Number(document.body.dataset.resumeScrollY || 0);
-      delete document.body.dataset.resumeScrollY;
-      // Re-sync the smoother to the remembered offset and refresh triggers so
-      // the visitor can immediately scroll up/down again.
-      if (smoother) {
-        try {
-          smoother.scrollTop(y);
-          ScrollTrigger.refresh();
-        } catch {
-          /* no-op */
-        }
+      if (!smoother) return;
+      try {
+        smoother.paused(false);
+        smoother.scrollTop(savedScrollY.current);
+        ScrollTrigger.refresh();
+      } catch {
+        /* no-op */
       }
     };
 

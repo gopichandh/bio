@@ -229,17 +229,25 @@
 @media screen and (min-width: 1025px) {
   .photo-hero {
     position: fixed;
-    right: max(4.4vw, calc((100vw - var(--cMaxWidth)) / 2 + 3.6vw));
-    bottom: 10vh;
-    width: min(30vw, 440px);
+    /* Pushed further LEFT (larger right offset) and made smaller so the card
+       clears the football goal-post + GOALS scoreboard on the right edge and
+       never overlaps them. */
+    right: max(7vw, calc((100vw - var(--cMaxWidth)) / 2 + 6vw));
+    bottom: 11vh;
+    width: min(24vw, 340px);
     z-index: 11;
+  }
+  /* Shorten the portrait (a squarer crop) so it takes less vertical room and
+     sits comfortably inside the landing without reaching the scoreboard. */
+  .photo-card {
+    aspect-ratio: 4 / 4.4;
   }
 }
 
 @media screen and (min-width: 1600px) {
   .photo-hero {
-    right: calc((100vw - var(--cMaxWidth)) / 2 + 5vw);
-    width: min(28vw, 480px);
+    right: calc((100vw - var(--cMaxWidth)) / 2 + 7vw);
+    width: min(23vw, 380px);
   }
 }
 

@@ -3,10 +3,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import "./styles/RoamingBot.css";
 import { collectObstacles, ObRect } from "./utils/contentObstacles";
+import { botScreen, ballScreen } from "./utils/mascotShared";
 
-// Shared, module-level screen-space position of the bot (in CSS pixels) so the
-// HTML speech bubble can follow the 3D mascot around the viewport.
-const botScreen = { x: 0, y: 0, ready: false };
+// `botScreen` (the bot head's projected CSS-pixel position) now lives in the
+// shared mascot module so the football can read it — and so this file can read
+// the ball's position — letting the two mascots repel each other and keep a
+// comfortable distance. It still doubles as the anchor for the speech bubble.
 
 // Shared, module-level list of on-screen content boxes (viewport pixels) that
 // the bot must never drift over. Refreshed by the RoamingBot component.
@@ -67,15 +69,17 @@ function RobotModel({
   const hopT = useRef(0);
   const t0 = useRef(0);
 
-  // Constrained roaming extents (world units): the bot stays in the MIDDLE of
-  // the screen — well away from the left/right edges, the very bottom, and the
-  // CI/CD pipeline strip pinned near the top — so it never drifts over the
-  // photo, the pipeline, or off the edges. It weaves through the empty gaps of
-  // the central column while keeping a comfortable margin everywhere.
-  const zoneXMin = -bounds.x * 0.58;
-  const zoneXMax = bounds.x * 0.58;
-  const zoneYMin = -bounds.y * 0.55;
-  const zoneYMax = bounds.y * 0.42; // stay below the top CI/CD pipeline strip
+  // Constrained roaming extents (world units). On the desktop the bot stays in
+  // the MIDDLE of the screen — away from the left/right edges, the very bottom
+  // and the CI/CD pipeline strip pinned near the top. On NARROW (mobile)
+  // viewports that central box is far too cramped, so we open the zone up wide
+  // (almost the whole viewport) so the bot has real room to roam freely and the
+  // frame doesn't feel congested — matching the spacious desktop feel.
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const zoneXMin = -bounds.x * (isMobile ? 0.82 : 0.58);
+  const zoneXMax = bounds.x * (isMobile ? 0.82 : 0.58);
+  const zoneYMin = -bounds.y * (isMobile ? 0.82 : 0.55);
+  const zoneYMax = bounds.y * (isMobile ? 0.72 : 0.42); // stay below the top CI/CD pipeline strip
 
   // Convert a viewport-pixel rect into the bot's world frame (origin centre, +y up).
   const rectToWorld = (r: ObRect) => {
@@ -256,6 +260,40 @@ function RobotModel({
           const force = (0.95 - d) * 70;
           vel.current.x += (dpx / d) * force * dt;
           vel.current.y += (dpy / d) * force * dt;
+        }
+      }
+    }
+
+    // --- Repel from the football so the two mascots keep a comfortable
+    // distance and the frame never looks cluttered with both bunched together.
+    // The push is soft and only kicks in within a generous radius; when the
+    // visitor is actively PLAYING (cursor near / shoving) we relax it so the
+    // ball can still be driven right up to the bot for a bit of fun. ---
+    if (!intro && ballScreen.active) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const ballWx = (ballScreen.x / vw) * 2 - 1;
+      const ballWy = -((ballScreen.y / vh) * 2 - 1);
+      const bx = ballWx * bounds.x;
+      const by = ballWy * bounds.y;
+      const ddx = pos.x - bx;
+      const ddy = pos.y - by;
+      const bd = Math.hypot(ddx, ddy);
+      // desired separation ~ 42% of the viewport width (shrunk while playing)
+      const keepAway = bounds.x * (pushing || cursorNear ? 0.5 : 1.0);
+      if (bd < keepAway && bd > 0.0001) {
+        const force = (keepAway - bd) / keepAway;
+        const push = (pushing || cursorNear ? 6 : 22) * force;
+        vel.current.x += (ddx / bd) * push * dt;
+        vel.current.y += (ddy / bd) * push * dt;
+        // when not playing, also steer the wander target away from the ball so
+        // the bot commits to leaving rather than springing straight back
+        if (!pushing && !cursorNear && bd < keepAway * 0.55) {
+          target.current.set(
+            THREE.MathUtils.clamp(pos.x + (ddx / bd) * bounds.x * 0.6, zoneXMin, zoneXMax),
+            THREE.MathUtils.clamp(pos.y + (ddy / bd) * bounds.y * 0.6, zoneYMin, zoneYMax)
+          );
+          nextTargetAt.current = Math.max(nextTargetAt.current, 0.8);
         }
       }
     }

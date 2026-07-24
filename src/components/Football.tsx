@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./styles/Football.css";
 import { collectObstacles, resolveCircle, ObRect } from "./utils/contentObstacles";
+import { botScreen, ballScreen } from "./utils/mascotShared";
 
 /**
  * Football
@@ -231,6 +232,31 @@ const Football = () => {
       const gw = goal.w;
       const gh = goal.h;
 
+      // --- Framed rail behind the goal-post — mirrors the left social-icons
+      // rail: a slim, softly-shaded vertical panel hugging the right edge with a
+      // delicate teal border on its LEFT edge, so the goal sits inside a clean,
+      // intentional frame just like the social icons do on the left. ---
+      const railW = gw + 26;
+      const railX = w - railW;
+      const railPadY = 26;
+      const railY = gy - 20 - railPadY;
+      const railH = gh + 40 + railPadY * 2;
+      ctx.save();
+      const railGrad = ctx.createLinearGradient(railX, 0, railX + railW, 0);
+      railGrad.addColorStop(0, "rgba(94,234,212,0.05)");
+      railGrad.addColorStop(1, "rgba(255,255,255,0.02)");
+      ctx.fillStyle = railGrad;
+      roundRect(ctx, railX, railY, railW + 4, railH, 14);
+      ctx.fill();
+      // teal border down the LEFT edge of the rail (matches .social-icons border)
+      ctx.strokeStyle = "rgba(94,234,212,0.28)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(railX, railY + 8);
+      ctx.lineTo(railX, railY + railH - 8);
+      ctx.stroke();
+      ctx.restore();
+
       ctx.save();
       ctx.strokeStyle = "rgba(200,230,240,0.22)";
       ctx.lineWidth = 1;
@@ -431,6 +457,10 @@ const Football = () => {
       const dy = ball.y - pointer.y;
       const dist = Math.hypot(dx, dy);
       const pSpeed = Math.hypot(pointer.vx, pointer.vy);
+      // "Playing" = the finger/cursor is right by the ball. While playing we
+      // relax the bot-avoidance so the visitor can dribble the ball right up to
+      // the bot; the rest of the time the two mascots keep well apart.
+      const playing = dist < R + 60;
       if (dist < R + 26) {
         const nx = dx / (dist || 1);
         const ny = dy / (dist || 1);
@@ -441,6 +471,27 @@ const Football = () => {
         ball.vy += pointer.vy * 6;
         ball.spin += (pointer.vx - pointer.vy) * 0.02;
         idleTime = 0;
+      }
+
+      // --- Repel from the roaming bot so the two mascots keep a comfortable
+      // distance and the frame never looks cluttered with both bunched
+      // together. Soft, distance-scaled push; strongly relaxed while playing so
+      // the ball can still be driven toward the bot for fun. ---
+      if (botScreen.ready) {
+        const bdx = ball.x - botScreen.x;
+        const bdy = ball.y - botScreen.y;
+        const bd = Math.hypot(bdx, bdy);
+        // desired separation (much smaller while playing so the ball can be
+        // driven up to the bot). Capped in px so it never eats the whole width.
+        const keepAway = Math.min(w * 0.33, 360) * (playing ? 0.4 : 1);
+        if (bd < keepAway && bd > 0.001) {
+          const nx = bdx / bd;
+          const ny = bdy / bd;
+          const force = (keepAway - bd) / keepAway;
+          const push = (playing ? 50 : 300) * force;
+          ball.vx += nx * push * dt;
+          ball.vy += ny * push * dt;
+        }
       }
 
       // --- Floating drift (no gravity): keep it lively but calm ---
@@ -476,20 +527,34 @@ const Football = () => {
       // --- Goal check FIRST so vx > 0 still holds as the ball enters the mouth ---
       tryScore();
 
-      // --- Viewport walls (the goal mouth on the right edge is an opening) ---
+      // --- Viewport walls with a generous visible MARGIN so the ball never
+      // hides in the extreme edges/corners of the screen. It bounces off an
+      // inset boundary (margin + R from each edge) instead of the raw edge, so
+      // the whole ball always stays comfortably on-screen. The right edge keeps
+      // its goal-mouth opening so shots can still be scored. ---
+      const margin = Math.max(24, Math.min(w, h) * 0.05);
       const inGoalMouth = ball.y > goal.y - R && ball.y < goal.y + goal.h + R;
-      if (ball.x < R) {
-        ball.x = R;
+      const leftWall = R + margin;
+      const rightWall = w - R - margin;
+      const topWall = R + margin;
+      const botWall = h - R - margin;
+      if (ball.x < leftWall) {
+        ball.x = leftWall;
         ball.vx = Math.abs(ball.vx) * 0.86;
-      } else if (ball.x > w - R && !inGoalMouth) {
+      } else if (ball.x > rightWall && !inGoalMouth) {
+        ball.x = rightWall;
+        ball.vx = -Math.abs(ball.vx) * 0.86;
+      } else if (ball.x > w - R && inGoalMouth) {
+        // still hard-clamp at the true right edge inside the goal mouth so the
+        // ball can enter the goal but never slips off-screen
         ball.x = w - R;
         ball.vx = -Math.abs(ball.vx) * 0.86;
       }
-      if (ball.y < R) {
-        ball.y = R;
+      if (ball.y < topWall) {
+        ball.y = topWall;
         ball.vy = Math.abs(ball.vy) * 0.86;
-      } else if (ball.y > h - R) {
-        ball.y = h - R;
+      } else if (ball.y > botWall) {
+        ball.y = botWall;
         ball.vy = -Math.abs(ball.vy) * 0.86;
       }
 
@@ -498,6 +563,12 @@ const Football = () => {
       resolveCircle(ball, R, obstacles, 0.72);
 
       idleTime += dt;
+
+      // Publish the ball's position so the roaming bot can repel from it.
+      ballScreen.x = ball.x;
+      ballScreen.y = ball.y;
+      ballScreen.r = R;
+      ballScreen.active = true;
 
       trail.push({ x: ball.x, y: ball.y });
       if (trail.length > 8) trail.shift();
@@ -531,6 +602,7 @@ const Football = () => {
 
     return () => {
       cancelAnimationFrame(raf);
+      ballScreen.active = false;
       window.clearInterval(obstacleTimer);
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", refreshObstacles);
