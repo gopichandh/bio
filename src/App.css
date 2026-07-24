@@ -1,5 +1,10 @@
 .section-container {
   width: 1300px;
+  /* Reserve clear side gutters so the centred content never slides under the
+     fixed left social rail (VM + icons) or the right résumé goal-post. Only
+     those rail elements live in the outer border zones; everything else stays
+     inside. */
+  max-width: calc(100% - 240px);
 }
 .title,
 .para {
@@ -12,7 +17,7 @@
 @media only screen and (max-width: 1600px) {
   .section-container {
     width: 1200px;
-    max-width: calc(100% - 160px);
+    max-width: calc(100% - 220px);
   }
 }
 @media only screen and (max-width: 1400px) {

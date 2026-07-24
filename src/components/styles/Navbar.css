@@ -4,7 +4,7 @@
   width: var(--cWidth);
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0px;
+  padding: 14px 0px;
   margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
@@ -23,18 +23,20 @@
 .header-left {
   display: flex;
   align-items: center;
-  column-gap: 26px;
+  column-gap: 14px;
+  flex-wrap: nowrap;
 }
 .header ul {
-  font-size: 12px;
+  font-size: 11px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 26px;
-  row-gap: 8px;
-  align-items: start;
+  column-gap: 14px;
+  row-gap: 0;
+  align-items: center;
 }
 .nav-home {
   color: var(--accentColor, #5eead4);
@@ -77,11 +79,9 @@
     font-size: 16px;
   }
 }
-@media only screen and (min-width: 900px) {
-  .navbar-connect {
-    display: block;
-  }
-}
+/* NOTE: the centred `.navbar-connect` LinkedIn URL was removed from the top
+   bar — it collided with the CONTACT nav link and duplicated the LinkedIn icon
+   already present in the left social rail. It stays hidden at every width. */
 @media only screen and (min-width: 1200px) {
   .header {
     padding: 35px 0px;

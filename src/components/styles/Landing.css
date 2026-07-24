@@ -173,6 +173,15 @@
   }
 }
 
+/* From the width where the left social rail (VM + icons) becomes visible,
+   inset the hero text so it never slides under the rail — the rail stays alone
+   in the left border zone and all copy sits cleanly inside it. */
+@media screen and (min-width: 900px) {
+  .landing-intro {
+    padding-left: 84px;
+  }
+}
+
 /* ------------------------------------------------------------------
    DESKTOP  (text pinned left, photo occupies right half)
 ------------------------------------------------------------------ */
@@ -182,7 +191,9 @@
     left: 0;
     right: auto;
     transform: translateY(-50%);
-    max-width: 46%;
+    max-width: 52%;
+    padding-left: 84px;
+    box-sizing: border-box;
   }
 }
 

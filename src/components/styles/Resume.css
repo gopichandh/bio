@@ -342,11 +342,29 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .resume-overlay {
+    padding: 20px 12px;
+    align-items: flex-start;
+  }
+  .resume-modal {
+    border-radius: 14px;
+  }
+  .resume-toolbar {
+    padding: 12px 12px;
+    gap: 8px;
+  }
+  .resume-tool-btn {
+    font-size: 12.5px;
+    padding: 7px 11px;
+  }
   .resume-doc {
-    padding: 28px 22px 36px;
+    padding: 26px 20px 34px;
   }
   .resume-head h1 {
-    font-size: 26px;
+    font-size: 24px;
+  }
+  .resume-title {
+    font-size: 15px;
   }
   .resume-job-head {
     flex-direction: column;
@@ -354,6 +372,23 @@
   }
   .resume-lock-form {
     flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .resume-overlay {
+    padding: 14px 8px;
+  }
+  .resume-tool-btn {
+    font-size: 11.5px;
+    padding: 6px 9px;
+    letter-spacing: 0;
+  }
+  .resume-doc {
+    padding: 22px 16px 30px;
+  }
+  .resume-head h1 {
+    font-size: 22px;
   }
 }
 

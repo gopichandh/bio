@@ -217,18 +217,25 @@ const DataCenterBG = () => {
       // so it never collides with the page text below.
       ctx.save();
       ctx.globalAlpha = pipeAlpha;
-      const span = Math.min(520, w * 0.5);
+      // Responsive sizing: on narrow (mobile) screens the strip must shrink to
+      // sit fully inside the viewport with comfortable side margins, and drop
+      // closer to the top since the header is more compact there.
+      const isMobile = w < 600;
+      const padX = isMobile ? 18 : 34;
+      // Cap the span so the panel (span + 2*padX) always fits within the screen
+      // with a healthy side margin on phones.
+      const maxSpan = isMobile ? w - padX * 2 - 32 : 520;
+      const span = Math.min(maxSpan, isMobile ? w * 0.72 : w * 0.5);
       const startX = w * 0.5 - span / 2;
       const gapX = span / (STAGES.length - 1);
-      // Pushed well clear of the top navigation bar so the pipeline never
-      // merges into the menu; sits as a distinct, centred status strip below it.
-      const railY = 168;
+      // Pushed clear of the top navigation bar so the pipeline never merges into
+      // the menu; sits as a distinct, centred status strip below it.
+      const railY = isMobile ? 120 : 168;
       const nodeX = (i: number) => startX + i * gapX;
 
       // --- Panel backdrop (separates the widget from text behind it) ---
       // Slightly more opaque + a brighter accent border so the widget reads
       // clearly as its own element rather than blending into the backdrop.
-      const padX = 34;
       const panelX = startX - padX;
       const panelW = span + padX * 2;
       const panelTop = railY - 44;

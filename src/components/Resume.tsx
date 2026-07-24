@@ -34,48 +34,64 @@ const Resume = () => {
 
   // Lock scrolling while open and allow Esc to close.
   //
-  // The site scrolls via GSAP ScrollSmoother (a transform on #smooth-content),
-  // NOT native body scroll — so toggling `body.overflow` alone left the page
-  // frozen after the résumé closed. We must PAUSE the smoother while the
-  // overlay is open and, crucially, un-pause it again on close so the visitor
-  // can scroll the page afterwards.
+  // The site scrolls via GSAP ScrollSmoother (a transform on #smooth-content).
+  // Previously we PAUSED the smoother while the résumé was open, but calling
+  // `paused(true)` / `paused(false)` reliably WEDGED the smoother — after the
+  // résumé closed the page could no longer scroll.
+  //
+  // The robust fix is to NOT pause the smoother at all. Instead we freeze the
+  // scroll wrapper in place with `position: fixed` for the duration of the
+  // overlay (remembering the current scroll offset), then restore it on close.
+  // Because the smoother's own RAF/observers are never touched, scrolling is
+  // always fully functional again the instant the résumé closes.
   useEffect(() => {
-    // Helper: fully hand scrolling back to ScrollSmoother. Simply calling
-    // `paused(false)` sometimes leaves the smoother in a wedged state (its
-    // internal RAF/observers desync after the overlay froze the page), so we
-    // also refresh ScrollTrigger and re-sync the scroll position on the next
-    // frame — that reliably lets the visitor scroll up/down again after close.
-    const resumeScroll = () => {
-      document.body.style.overflow = "";
-      if (smoother) {
-        smoother.paused(false);
-        // Re-sync on the next frame once styles have settled.
-        requestAnimationFrame(() => {
-          try {
-            const y = smoother.scrollTop();
-            smoother.scrollTop(y);
-            ScrollTrigger.refresh();
-          } catch {
-            /* no-op */
-          }
-        });
+    const wrapper = document.getElementById("smooth-wrapper");
+
+    const lock = () => {
+      const y = smoother ? smoother.scrollTop() : window.scrollY;
+      document.body.dataset.resumeScrollY = String(y);
+      document.body.style.overflow = "hidden";
+      if (wrapper) {
+        wrapper.style.position = "fixed";
+        wrapper.style.top = `-${y}px`;
+        wrapper.style.left = "0";
+        wrapper.style.right = "0";
+        wrapper.style.width = "100%";
       }
     };
 
-    if (open) {
-      document.body.style.overflow = "hidden";
-      smoother?.paused(true);
-    } else {
-      resumeScroll();
-    }
+    const unlock = () => {
+      document.body.style.overflow = "";
+      if (wrapper) {
+        wrapper.style.position = "";
+        wrapper.style.top = "";
+        wrapper.style.left = "";
+        wrapper.style.right = "";
+        wrapper.style.width = "";
+      }
+      const y = Number(document.body.dataset.resumeScrollY || 0);
+      delete document.body.dataset.resumeScrollY;
+      // Re-sync the smoother to the remembered offset and refresh triggers so
+      // the visitor can immediately scroll up/down again.
+      if (smoother) {
+        try {
+          smoother.scrollTop(y);
+          ScrollTrigger.refresh();
+        } catch {
+          /* no-op */
+        }
+      }
+    };
+
+    if (open) lock();
+    else unlock();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     if (open) window.addEventListener("keydown", onKey);
     return () => {
-      // Always restore scrolling when this effect tears down.
-      resumeScroll();
+      unlock();
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
