@@ -91,3 +91,52 @@
 
 /* The roaming bot mascot is enabled on ALL devices, including mobile, so the
    experience matches desktop (see RoamingBot.tsx for touch/pointer handling). */
+
+/* ------------------------------------------------------------------
+   MOBILE speech bubble — on a small screen the bubble that chases the
+   bot into the corners collapses into a cramped, unreadable column. On
+   phones we instead pin it as a clean, full-width "guide caption" bar
+   docked just above the bottom edge: always centred, always readable,
+   never congested — while the bot itself still roams freely behind it.
+   (The inline left/top the JS sets are overridden with !important.)
+------------------------------------------------------------------ */
+@media only screen and (max-width: 768px) {
+  .bot-speech,
+  .bot-speech.bot-speech-flip {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    /* Docked above the bottom-right résumé button so the two never overlap. */
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    transform: none !important;
+    width: auto;
+    max-width: none;
+    margin-top: 0;
+    padding: 11px 16px 11px 16px;
+    /* leave clear space on the right for the résumé button/tooltip */
+    padding-right: 92px;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: left;
+    border-radius: 14px;
+    z-index: 61;
+    animation: bot-speech-fade 0.35s ease;
+  }
+  /* No tail — it's a caption bar, not a pointer bubble, on mobile. */
+  .bot-speech::after,
+  .bot-speech.bot-speech-flip::after {
+    display: none;
+  }
+}
+
+/* Subtle fade used for the mobile caption bar (no scale jump that would
+   fight the fixed bottom-docked layout). */
+@keyframes bot-speech-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

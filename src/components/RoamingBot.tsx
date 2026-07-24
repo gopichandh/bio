@@ -502,8 +502,13 @@ function RobotModel({
     []
   );
 
+  // On phones the orthographic bot (fixed world→pixel mapping) would otherwise
+  // render at the same pixel size as desktop and feel oversized/congested, so
+  // we render it a touch smaller on narrow viewports.
+  const botScale = isMobile ? 0.32 : 0.42;
+
   return (
-    <group ref={root} position={[bounds.x * 0.3, -bounds.y * 0.3, 0]} scale={0.42}>
+    <group ref={root} position={[bounds.x * 0.3, -bounds.y * 0.3, 0]} scale={botScale}>
       <group ref={body}>
         {/* torso */}
         <mesh material={metal} castShadow>

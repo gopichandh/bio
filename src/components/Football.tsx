@@ -34,7 +34,9 @@ const Football = () => {
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let raf = 0;
 
-    const R = 18; // ball radius
+    // Ball radius — a touch smaller on phones so it stays a neat accent that
+    // never crowds the headings/copy on a narrow screen.
+    const R = window.innerWidth < 768 ? 13 : 18;
 
     const ball = {
       x: w * 0.5,
