@@ -222,21 +222,24 @@
   }
 }
 
-/* On desktop the hero card is a fixed centerpiece anchored to the right */
+/* On desktop the hero card is a fixed centerpiece anchored to the right. It is
+   nudged INSIDE the right-edge divider line (see .edge-rail-line) so the photo
+   never reaches the viewport edge — it sits within the framed content column,
+   leaving only the slim gutter (and the football goal-post) to its right. */
 @media screen and (min-width: 1025px) {
   .photo-hero {
     position: fixed;
-    right: max(2vw, calc((100vw - var(--cMaxWidth)) / 2 + 1vw));
+    right: max(4.4vw, calc((100vw - var(--cMaxWidth)) / 2 + 3.6vw));
     bottom: 10vh;
-    width: min(32vw, 460px);
+    width: min(30vw, 440px);
     z-index: 11;
   }
 }
 
 @media screen and (min-width: 1600px) {
   .photo-hero {
-    right: calc((100vw - var(--cMaxWidth)) / 2 + 3vw);
-    width: min(30vw, 500px);
+    right: calc((100vw - var(--cMaxWidth)) / 2 + 5vw);
+    width: min(28vw, 480px);
   }
 }
 

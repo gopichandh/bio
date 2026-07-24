@@ -158,6 +158,11 @@ const SocialIcons = () => {
           <TbNotes />
         </span>
       </button>
+      {/* Right-edge divider line, mirroring the left social rail's border. It
+          draws a delicate teal vertical line near the right gutter so the photo
+          and content sit neatly INSIDE it, while the football goal-post lives in
+          the slim strip to its right. Desktop only (matches the left rail). */}
+      <div className="edge-rail-line" aria-hidden="true" />
     </div>
   );
 };

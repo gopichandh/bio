@@ -89,9 +89,5 @@
   }
 }
 
-/* On small screens the roaming bot can crowd the layout — hide it. */
-@media screen and (max-width: 768px) {
-  .roaming-bot {
-    display: none;
-  }
-}
+/* The roaming bot mascot is enabled on ALL devices, including mobile, so the
+   experience matches desktop (see RoamingBot.tsx for touch/pointer handling). */

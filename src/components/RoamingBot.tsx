@@ -686,22 +686,54 @@ const RoamingBot = () => {
   const progressRef = useRef<number>(0);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;
-      const ny = -((e.clientY / window.innerHeight) * 2 - 1);
-      // per-move velocity (in NDC units) so a quick swipe shoves the bot harder
+    // Shared handler: convert a viewport pixel position to normalized device
+    // coords and record per-move velocity so a quick swipe shoves the bot.
+    const setFromClient = (cx: number, cy: number) => {
+      const nx = (cx / window.innerWidth) * 2 - 1;
+      const ny = -((cy / window.innerHeight) * 2 - 1);
       pointer.vx = nx - pointer.x;
       pointer.vy = ny - pointer.y;
       pointer.x = nx;
       pointer.y = ny;
       pointer.active = true;
     };
+    const onMove = (e: MouseEvent) => setFromClient(e.clientX, e.clientY);
     const onLeave = () => (pointer.active = false);
+
+    // Touch parity for mobile: a finger drag pushes/greets the bot just like a
+    // cursor. On touchstart we snap without velocity; on touchend the pointer
+    // goes inactive so the bot resumes free roaming.
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      const nx = (t.clientX / window.innerWidth) * 2 - 1;
+      const ny = -((t.clientY / window.innerHeight) * 2 - 1);
+      pointer.x = nx;
+      pointer.y = ny;
+      pointer.vx = 0;
+      pointer.vy = 0;
+      pointer.active = true;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      setFromClient(t.clientX, t.clientY);
+    };
+    const onTouchEnd = () => (pointer.active = false);
+
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseout", onLeave);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseout", onLeave);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
     };
   }, []);
 

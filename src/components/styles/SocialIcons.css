@@ -227,6 +227,36 @@
   width: 100%;
   z-index: 99999;
 }
+
+/* Right-edge divider line — a delicate vertical teal line near the right
+   gutter that mirrors the left social rail's border. It gives the page a
+   symmetric, framed feel: all content/photo sits INSIDE it, and only the
+   football goal-post occupies the slim strip to its right. Hidden by default
+   (mobile shows nothing in the gutters); shown from 1025px up, where the photo
+   is a fixed right-anchored centerpiece. */
+.edge-rail-line {
+  display: none;
+}
+@media only screen and (min-width: 1025px) {
+  .edge-rail-line {
+    display: block;
+    position: fixed;
+    top: 12vh;
+    bottom: 12vh;
+    right: max(2.4vw, calc((100vw - var(--cMaxWidth)) / 2 + 1.4vw));
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(94, 234, 212, 0) 0%,
+      rgba(94, 234, 212, 0.32) 18%,
+      rgba(94, 234, 212, 0.32) 82%,
+      rgba(94, 234, 212, 0) 100%
+    );
+    box-shadow: 0 0 12px rgba(94, 234, 212, 0.18);
+    z-index: 10;
+    pointer-events: none;
+  }
+}
 @media only screen and (min-width: 900px) {
   .social-icons {
     display: flex;

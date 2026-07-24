@@ -25,7 +25,6 @@ const Football = () => {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -93,13 +92,50 @@ const Football = () => {
       refreshObstacles();
     };
 
-    const onMove = (e: MouseEvent) => {
+    const setPointer = (cx: number, cy: number) => {
       pointer.px = pointer.x;
       pointer.py = pointer.y;
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
+      pointer.x = cx;
+      pointer.y = cy;
       pointer.vx = pointer.x - pointer.px;
       pointer.vy = pointer.y - pointer.py;
+    };
+
+    const onMove = (e: MouseEvent) => {
+      setPointer(e.clientX, e.clientY);
+    };
+
+    // Touch support so mobile visitors can dribble/kick the ball with a finger.
+    // The layer is pointer-events:none, so these window-level listeners simply
+    // track the finger; when it comes near the ball, step() imparts a kick just
+    // like the mouse. We snap the pointer to the first touch on touchstart to
+    // avoid a spurious huge velocity from the previous stale position.
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      pointer.x = t.clientX;
+      pointer.y = t.clientY;
+      pointer.px = t.clientX;
+      pointer.py = t.clientY;
+      pointer.vx = 0;
+      pointer.vy = 0;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      setPointer(t.clientX, t.clientY);
+    };
+
+    // When the finger lifts, park the pointer off-screen so the ball is free to
+    // drift again instead of sticking to the last touch point.
+    const onTouchEnd = () => {
+      pointer.x = -9999;
+      pointer.y = -9999;
+      pointer.px = -9999;
+      pointer.py = -9999;
+      pointer.vx = 0;
+      pointer.vy = 0;
     };
 
     /* ---------------- Rendering ---------------- */
@@ -487,6 +523,10 @@ const Football = () => {
     window.addEventListener("resize", resize);
     window.addEventListener("scroll", refreshObstacles, { passive: true });
     window.addEventListener("mousemove", onMove);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     raf = requestAnimationFrame(loop);
 
     return () => {
@@ -495,6 +535,10 @@ const Football = () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", refreshObstacles);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
     };
   }, []);
 
