@@ -229,12 +229,14 @@
 @media screen and (min-width: 1025px) {
   .photo-hero {
     position: fixed;
-    /* Pushed further LEFT (larger right offset) and made smaller so the card
-       clears the football goal-post + GOALS scoreboard on the right edge and
-       never overlaps them. */
-    right: max(7vw, calc((100vw - var(--cMaxWidth)) / 2 + 6vw));
+    /* Pushed further LEFT (larger right offset) so a clear separation gutter
+       opens up between the card's right edge and the football goal-post rail
+       on the screen edge — mirroring the neat gap the social-icons rail keeps
+       on the left. The card is also a touch smaller so it clears the goal-post
+       + GOALS scoreboard completely and never overlaps them. */
+    right: max(12vw, calc((100vw - var(--cMaxWidth)) / 2 + 10vw));
     bottom: 11vh;
-    width: min(24vw, 340px);
+    width: min(22vw, 320px);
     z-index: 11;
   }
   /* Shorten the portrait (a squarer crop) so it takes less vertical room and
@@ -246,8 +248,8 @@
 
 @media screen and (min-width: 1600px) {
   .photo-hero {
-    right: calc((100vw - var(--cMaxWidth)) / 2 + 7vw);
-    width: min(23vw, 380px);
+    right: calc((100vw - var(--cMaxWidth)) / 2 + 11vw);
+    width: min(21vw, 360px);
   }
 }
 

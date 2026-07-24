@@ -65,6 +65,18 @@ const Football = () => {
     let goalFlash = 0;
     let idleTime = 4; // seconds since the ball was last kicked (drives the "kick me" nudge)
 
+    // --- Auto "the-bot-scored" shot scheduler -----------------------------
+    // Every so often the ball lines itself up in the clear right gutter (at the
+    // goal's height) and is tapped precisely into the CENTRE of the goal for a
+    // tidy, satisfying score. It happens fairly often at first, then the gap
+    // grows so it becomes an occasional treat rather than a distraction. The
+    // whole manoeuvre stays inside the empty right gutter so it never crosses
+    // (or blocks) any text/heading in the centred content column.
+    let autoElapsed = 0; // seconds accumulated toward the next attempt
+    let autoGap = 9; // seconds until the first attempt (frequent early on)
+    let aiming = false; // true while lining up / taking a shot
+    let aimHold = 0; // small settle timer once positioned before the tap
+
     const roundRect = (
       c: CanvasRenderingContext2D,
       x: number,
@@ -473,13 +485,70 @@ const Football = () => {
         ball.vy += pointer.vy * 6;
         ball.spin += (pointer.vx - pointer.vy) * 0.02;
         idleTime = 0;
+        // A human kick always takes priority — abort any auto-shot in progress.
+        aiming = false;
+      }
+
+      // --- Auto "the-bot-scored" manoeuvre -------------------------------
+      // When idle (visitor isn't playing) the ball periodically lines itself up
+      // in the clear RIGHT gutter and taps a clean goal into the CENTRE of the
+      // posts. Frequent at first, then the interval grows so it stays a subtle
+      // delight. The lineup point sits in the empty gutter to the right of the
+      // content column, so the ball never travels across any text.
+      const goalCenterY = goal.y + goal.h / 2;
+      const edgeMargin = Math.max(24, Math.min(w, h) * 0.05);
+      const lineupX = Math.min(goal.x - 130, w - R - edgeMargin);
+      if (!playing) {
+        if (!aiming) {
+          autoElapsed += dt;
+          if (autoElapsed >= autoGap) {
+            aiming = true;
+            aimHold = 0;
+            autoElapsed = 0;
+            // Grow the gap each time so it slows down: 9s → 14 → 19 … capped.
+            autoGap = Math.min(38, autoGap + 5);
+          }
+        } else {
+          // Phase 1: glide to the lineup spot (right gutter, goal height).
+          const tx = lineupX;
+          const ty = goalCenterY;
+          const adx = tx - ball.x;
+          const ady = ty - ball.y;
+          const adist = Math.hypot(adx, ady);
+          if (adist > 8 && aimHold <= 0) {
+            // steer smoothly toward the lineup spot
+            const desiredVX = (adx / (adist || 1)) * 260;
+            const desiredVY = (ady / (adist || 1)) * 260;
+            ball.vx += (desiredVX - ball.vx) * Math.min(1, dt * 4);
+            ball.vy += (desiredVY - ball.vy) * Math.min(1, dt * 4);
+          } else {
+            // Phase 2: settle briefly, then TAP precisely into the goal centre.
+            aimHold += dt;
+            ball.vx *= 0.6;
+            ball.vy *= 0.6;
+            if (aimHold > 0.35) {
+              const sdx = goal.x + goal.w - ball.x;
+              const sdy = goalCenterY - ball.y;
+              const sd = Math.hypot(sdx, sdy) || 1;
+              const shotSpeed = 560;
+              ball.vx = (sdx / sd) * shotSpeed;
+              ball.vy = (sdy / sd) * shotSpeed;
+              ball.spin = 0.25;
+              aiming = false;
+              idleTime = 0;
+            }
+          }
+        }
+      } else {
+        // While the visitor plays, keep the timer from firing immediately after.
+        autoElapsed = Math.min(autoElapsed, autoGap * 0.5);
       }
 
       // --- Repel from the roaming bot so the two mascots keep a comfortable
       // distance and the frame never looks cluttered with both bunched
       // together. Soft, distance-scaled push; strongly relaxed while playing so
       // the ball can still be driven toward the bot for fun. ---
-      if (botScreen.ready) {
+      if (botScreen.ready && !aiming) {
         const bdx = ball.x - botScreen.x;
         const bdy = ball.y - botScreen.y;
         const bd = Math.hypot(bdx, bdy);
@@ -496,9 +565,12 @@ const Football = () => {
         }
       }
 
-      // --- Floating drift (no gravity): keep it lively but calm ---
-      ball.vx += (Math.random() - 0.5) * 12;
-      ball.vy += (Math.random() - 0.5) * 12;
+      // --- Floating drift (no gravity): keep it lively but calm. Suppressed
+      // while lining up an auto-shot so the aim stays clean and precise. ---
+      if (!aiming) {
+        ball.vx += (Math.random() - 0.5) * 12;
+        ball.vy += (Math.random() - 0.5) * 12;
+      }
 
       // --- Integrate ---
       ball.x += ball.vx * dt;

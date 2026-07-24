@@ -1,0 +1,96 @@
+.server-room {
+  position: relative;
+  width: 100%;
+  height: clamp(220px, 26vh, 340px);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* merge into the page: transparent with soft top/bottom fades */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 22%,
+    rgba(0, 0, 0, 1) 78%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 22%,
+    rgba(0, 0, 0, 1) 78%,
+    transparent 100%
+  );
+}
+
+.server-room-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.server-room-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.server-room-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(10, 16, 26, 0.42);
+  border: 1px solid rgba(94, 234, 212, 0.18);
+  color: rgba(203, 224, 224, 0.7);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.server-room-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accentColor, #5eead4);
+  box-shadow: 0 0 8px rgba(94, 234, 212, 0.9);
+  animation: server-room-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes server-room-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 768px) {
+  .server-room {
+    height: clamp(160px, 22vh, 220px);
+  }
+
+  .server-room-caption {
+    font-size: 9.5px;
+    padding: 4px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .server-room-dot {
+    animation: none;
+  }
+}

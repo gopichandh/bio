@@ -76,10 +76,15 @@ function RobotModel({
   // (almost the whole viewport) so the bot has real room to roam freely and the
   // frame doesn't feel congested — matching the spacious desktop feel.
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const zoneXMin = -bounds.x * (isMobile ? 0.82 : 0.58);
-  const zoneXMax = bounds.x * (isMobile ? 0.82 : 0.58);
-  const zoneYMin = -bounds.y * (isMobile ? 0.82 : 0.55);
-  const zoneYMax = bounds.y * (isMobile ? 0.72 : 0.42); // stay below the top CI/CD pipeline strip
+  // Roam the WHOLE width now (including the empty left/right gutters beside the
+  // centred content column) so that in dense sections — Career, Tech Stack —
+  // the bot can flee to a clear side gutter instead of being trapped hovering
+  // over the copy in the middle. The vertical zone still stays below the top
+  // CI/CD pipeline strip.
+  const zoneXMin = -bounds.x * (isMobile ? 0.82 : 0.9);
+  const zoneXMax = bounds.x * (isMobile ? 0.82 : 0.9);
+  const zoneYMin = -bounds.y * (isMobile ? 0.82 : 0.82);
+  const zoneYMax = bounds.y * (isMobile ? 0.72 : 0.42);
 
   // Convert a viewport-pixel rect into the bot's world frame (origin centre, +y up).
   const rectToWorld = (r: ObRect) => {
@@ -122,17 +127,20 @@ function RobotModel({
   };
 
   const pickTarget = () => {
-    // Keep the bot roaming in the MIDDLE of the screen. Sample candidate points
-    // strictly inside the constrained central zone, prefer the ones that sit in
-    // the emptiest gap AND closest to centre (a small pull toward x≈0) so it
-    // gently weaves around the middle rather than drifting toward the edges.
+    // The readable content lives in the CENTRED column, so the emptiest space
+    // is out in the left/right gutters. Sample candidate points across the full
+    // zone and strongly prefer the emptiest gap; add a gentle bias TOWARD the
+    // sides (away from x≈0) so the bot naturally settles in the clear gutters
+    // rather than hovering over the copy in the middle.
     let best: { x: number; y: number; score: number } | null = null;
-    for (let i = 0; i < 28; i++) {
+    for (let i = 0; i < 36; i++) {
       const tx = zoneXMin + Math.random() * (zoneXMax - zoneXMin);
       const ty = zoneYMin + Math.random() * (zoneYMax - zoneYMin);
-      if (!inObstacle(tx, ty, 0.4)) {
-        // Reward empty spots, penalise distance from centre so it hugs middle.
-        const score = -crowdedness(tx, ty, 1.1) - Math.abs(tx) * 0.5;
+      if (!inObstacle(tx, ty, 0.5)) {
+        // Reward empty spots heavily; reward distance from centre so it drifts
+        // out to the clear side gutters beside the content column.
+        const score =
+          -crowdedness(tx, ty, 1.2) * 3 + (Math.abs(tx) / bounds.x) * 1.2;
         if (!best || score > best.score) best = { x: tx, y: ty, score };
       }
     }
@@ -140,10 +148,17 @@ function RobotModel({
       target.current.set(best.x, best.y);
       return;
     }
-    // Everything is crowded — settle back toward the centre.
+    // Everything is crowded — flee to whichever side gutter the bot is nearer,
+    // at a height a little below its current one so it appears to slide down
+    // and around the content rather than getting stuck.
+    const side = target.current.x >= 0 ? 1 : -1;
     target.current.set(
-      (Math.random() - 0.5) * bounds.x * 0.3,
-      zoneYMin + Math.random() * (zoneYMax - zoneYMin)
+      side * bounds.x * 0.85,
+      THREE.MathUtils.clamp(
+        target.current.y - bounds.y * 0.2,
+        zoneYMin,
+        zoneYMax
+      )
     );
   };
 
@@ -299,14 +314,22 @@ function RobotModel({
     }
 
     // --- Crowd-escape: when the bot is hemmed in by content (dense sections
-    // like "My Career & Experience" or the Tech Stack), nudge it toward the
-    // nearest clear gap while KEEPING it within the central roaming zone, so it
-    // never bolts to the screen edges. Pick a fresh central target next tick. ---
+    // like "My Career & Experience" or the Tech Stack), it must NOT sit over
+    // the copy. Steer it out to the nearest clear SIDE GUTTER (the empty space
+    // beside the centred content column) and let it glide gently DOWN as it
+    // goes, so it calmly swirls around the text to the edge rather than getting
+    // stuck on top of it. ---
     if (!intro && crowdedness(pos.x, pos.y, 1.2) >= 2) {
-      // gentle pull back toward the horizontal centre of the zone
-      vel.current.x += (0 - pos.x) * 1.6 * dt;
-      pickTarget();
-      nextTargetAt.current = Math.max(nextTargetAt.current, 1.2);
+      const side = pos.x >= 0 ? 1 : -1; // flee to whichever gutter is nearer
+      // firm sideways push toward that gutter + a soft downward drift so the
+      // motion reads as a smooth swirl-to-the-edge-then-glide-down
+      vel.current.x += side * 5.5 * dt * 12;
+      vel.current.y -= 1.2 * dt * 12;
+      target.current.set(
+        side * bounds.x * 0.85,
+        THREE.MathUtils.clamp(pos.y - bounds.y * 0.18, zoneYMin, zoneYMax)
+      );
+      nextTargetAt.current = Math.max(nextTargetAt.current, 1.0);
     }
 
     vel.current.multiplyScalar(0.86); // damping

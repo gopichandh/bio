@@ -79,8 +79,8 @@ const Cursor = () => {
 
   return (
     <div className="cursor-laptop" ref={cursorRef} aria-hidden="true">
-      {/* Halo ring so the cursor is easy to spot on the dark page */}
-      <span className="cursor-ring" />
+      {/* Precise click dot at the true pointer hotspot */}
+      <span className="cursor-dot" />
       <svg
         width="26"
         height="26"

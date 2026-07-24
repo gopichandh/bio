@@ -36,20 +36,19 @@
   opacity: 1;
 }
 
-/* Halo ring centred on the true pointer so the cursor is easy to spot */
-.cursor-ring {
+/* Small precise dot centred on the true pointer hotspot — no ring, just a
+   clean laptop glyph with a tiny locating dot so clicks land accurately. */
+.cursor-dot {
   position: absolute;
   top: 0;
   left: 0;
-  width: 38px;
-  height: 38px;
-  margin: -19px 0 0 -19px;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
   border-radius: 50%;
-  border: 2px solid rgba(94, 234, 212, 0.9);
-  box-shadow: 0 0 10px rgba(94, 234, 212, 0.55),
-    inset 0 0 6px rgba(94, 234, 212, 0.35);
-  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease,
-    border-color 0.2s ease, background 0.2s ease;
+  background: var(--accentColor);
+  box-shadow: 0 0 6px rgba(94, 234, 212, 0.8);
+  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease;
   pointer-events: none;
 }
 
@@ -57,21 +56,20 @@
 .cursor-laptop.cursor-hover svg {
   transform: translate(6px, 6px) scale(1.35);
 }
-.cursor-laptop.cursor-hover .cursor-ring {
-  width: 52px;
-  height: 52px;
-  margin: -26px 0 0 -26px;
-  background: rgba(94, 234, 212, 0.12);
+.cursor-laptop.cursor-hover .cursor-dot {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
 }
 
 /* Click feedback */
 .cursor-laptop.cursor-down svg {
   transform: translate(6px, 6px) scale(0.85);
 }
-.cursor-laptop.cursor-down .cursor-ring {
-  width: 30px;
-  height: 30px;
-  margin: -15px 0 0 -15px;
+.cursor-laptop.cursor-down .cursor-dot {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
 }
 
 /* Hide the OS cursor on precise pointers so ours is the only one */

@@ -13,6 +13,7 @@ import TechStack from "./TechStack";
 import Resume from "./Resume";
 import Credentials from "./Credentials";
 import DataCenterBG from "./DataCenterBG";
+import ServerRoom from "./ServerRoom";
 
 // Batch 4 — interactive SRE features
 import Achievements from "./Achievements";
@@ -70,6 +71,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <TechStack />
             <Career />
             <WhatIDo />
+            <ServerRoom />
             <Credentials />
             <Contact />
           </div>

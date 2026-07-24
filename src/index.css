@@ -20,7 +20,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   --accentColor: #5eead4;
-  --backgroundColor: #0a0e17;
+  --backgroundColor: #0f1523;
   --displayFont: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   --vh: 100vh;
@@ -70,7 +70,7 @@ main {
 body {
   margin: 0;
   height: auto;
-  background-color: #050810;
+  background-color: #0b111d;
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;

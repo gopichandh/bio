@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { MdArrowBack, MdPrint } from "react-icons/md";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { smoother } from "./Navbar";
 import resumeData from "../data/resumeData";
 import "./styles/Resume.css";
@@ -21,7 +20,7 @@ import "./styles/Resume.css";
 const Resume = () => {
   const [open, setOpen] = useState(false);
   // Remembers the scroll offset while the résumé is open so we can restore it
-  // exactly when the overlay closes.
+  // when the overlay opens (used only to keep the frozen page in place).
   const savedScrollY = useRef(0);
 
   // Open when the RESUME button (in SocialIcons) dispatches the event, or if
@@ -35,17 +34,25 @@ const Resume = () => {
     return () => window.removeEventListener("open-resume", openHandler);
   }, []);
 
-  // Lock scrolling while open and allow Esc to close.
+  // Closing the résumé does a clean, full page reload back at the top of the
+  // site (stripping any ?resume query so it doesn't immediately re-open).
   //
-  // The site scrolls via GSAP ScrollSmoother (a transform on #smooth-content).
-  // The ONLY reliable way to freeze/restore it is ScrollSmoother's own
-  // `paused()` API — toggling any CSS on #smooth-wrapper (position/overflow/top)
-  // fights ScrollSmoother's inline styles and leaves the page unable to scroll
-  // after the overlay closes (the bug we kept hitting).
-  //
-  // So: on open we pause the smoother (and remember the offset); on close we
-  // unpause, re-apply the remembered offset and refresh triggers. Because we
-  // never touch the wrapper's layout, scrolling always works again immediately.
+  // Why a reload instead of un-pausing ScrollSmoother in place? The smoother's
+  // paused()/scrollTop() dance was proving unreliable — after closing, the page
+  // would sometimes refuse to scroll until a manual refresh. A hard reload
+  // GUARANTEES a fresh, fully-scrollable page every time, which is exactly the
+  // behaviour requested. The brief flash is an acceptable trade for rock-solid
+  // scrolling.
+  const closeResume = () => {
+    const url = window.location.pathname + window.location.hash;
+    window.location.assign(url);
+    // In the rare case assign() doesn't trigger a navigation (same URL), force
+    // a reload so the page always comes back fully scrollable.
+    window.location.reload();
+  };
+
+  // While the résumé is open we freeze the underlying page by pausing
+  // ScrollSmoother (the reload on close restores everything cleanly).
   useEffect(() => {
     const lock = () => {
       if (!smoother) return;
@@ -57,26 +64,13 @@ const Resume = () => {
       }
     };
 
-    const unlock = () => {
-      if (!smoother) return;
-      try {
-        smoother.paused(false);
-        smoother.scrollTop(savedScrollY.current);
-        ScrollTrigger.refresh();
-      } catch {
-        /* no-op */
-      }
-    };
-
     if (open) lock();
-    else unlock();
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") closeResume();
     };
     if (open) window.addEventListener("keydown", onKey);
     return () => {
-      unlock();
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -86,13 +80,13 @@ const Resume = () => {
   return (
     <div className="resume-overlay" role="dialog" aria-modal="true">
       {/* Light scrim — the website stays faintly visible behind it */}
-      <div className="resume-backdrop" onClick={() => setOpen(false)} />
+      <div className="resume-backdrop" onClick={closeResume} />
 
       <div className="resume-modal">
         <div className="resume-toolbar">
           <button
             className="resume-tool-btn resume-back"
-            onClick={() => setOpen(false)}
+            onClick={closeResume}
             data-cursor="disable"
             aria-label="Back to website"
           >
