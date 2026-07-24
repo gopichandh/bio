@@ -1,0 +1,101 @@
+.srelab {
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  margin: auto;
+  padding: 80px 0 60px;
+}
+
+.srelab-container {
+  width: 100%;
+}
+
+.srelab-head {
+  text-align: center;
+  margin-bottom: 46px;
+}
+
+.srelab-chip {
+  display: inline-block;
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--accentColor);
+  background: rgba(94, 234, 212, 0.1);
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  border-radius: 8px;
+  padding: 5px 12px;
+  margin-bottom: 16px;
+}
+
+.srelab-head h2 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  margin: 0 0 12px;
+  color: #e2e8f0;
+}
+
+.srelab-head h2 span {
+  color: var(--accentColor);
+}
+
+.srelab-head p {
+  max-width: 620px;
+  margin: 0 auto;
+  color: rgba(148, 163, 184, 0.9);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.srelab-block {
+  margin-bottom: 26px;
+}
+
+.srelab-block-head {
+  margin-bottom: 16px;
+}
+
+.srelab-block-head h3 {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  color: #e2e8f0;
+}
+
+.srelab-block-head p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.srelab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+  margin-bottom: 26px;
+}
+
+.srelab-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 360px;
+  border-radius: 16px;
+  border: 1px solid rgba(94, 234, 212, 0.16);
+  background: rgba(10, 14, 23, 0.6);
+  color: rgba(148, 163, 184, 0.8);
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.85rem;
+}
+
+/* Elements flagged for the GSAP power-on reveal start hidden; if JS is off
+   or reduced-motion clears them, they remain visible. */
+.power-on {
+  will-change: opacity, transform;
+}
+
+@media (max-width: 768px) {
+  .srelab {
+    padding: 60px 0 40px;
+  }
+  .srelab-grid {
+    grid-template-columns: 1fr;
+  }
+}

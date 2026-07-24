@@ -1,0 +1,18 @@
+/* Playful bouncing-ball layer that fills the résumé overlay's side gutters.
+   Sits behind the résumé modal (which has a higher z-index), so it only
+   occupies the empty space on the left/right of the document. */
+
+.resume-balls {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1; /* above the resume backdrop, below the modal */
+  pointer-events: none; /* purely decorative; never blocks the résumé */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-balls {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,404 @@
+/* ============================================================
+   ScrollHuman — a full-body "Vilas" who walks DOWN the page in
+   lock-step with the visitor's scroll. Fixed in the LEFT gutter,
+   pointer-events:none so he NEVER blocks any text/control/image.
+   ============================================================ */
+
+.vm-human {
+  position: fixed;
+  left: 26px;
+  top: 8vh; /* JS drives this from scroll progress */
+  width: 120px;
+  height: 300px;
+  z-index: 58; /* below cursor & overlays, above the datacenter bg */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Smoothly ease toward the scroll-driven target so motion reads as walking
+     rather than teleporting on fast scrolls. */
+  transition: top 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.4));
+  animation: vmh-in 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes vmh-in {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Face the direction of travel (mirror when scrolling up) */
+.vm-human[data-dir="up"] .vm-human-svg {
+  transform: scaleX(-1);
+}
+
+.vm-human-svg {
+  display: block;
+  overflow: visible;
+  transition: transform 0.3s ease;
+}
+
+/* ---------- Caption bubble ---------- */
+.vm-human-caption {
+  order: -1;
+  max-width: 190px;
+  margin: 0 0 10px 0;
+  padding: 7px 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #e6fffb;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(13, 46, 44, 0.92),
+    rgba(9, 25, 30, 0.92)
+  );
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  border-radius: 12px 12px 12px 4px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  animation: vmh-caption-in 0.45s ease both;
+}
+
+@keyframes vmh-caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   PART PALETTE (matches the site's teal / Vilas likeness)
+   ============================================================ */
+.vmh-shadow {
+  fill: rgba(0, 0, 0, 0.3);
+  animation: vmh-shadow-idle 4.5s ease-in-out infinite;
+}
+@keyframes vmh-shadow-idle {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scaleX(0.9);
+    opacity: 0.6;
+  }
+}
+
+.vmh-skin {
+  fill: #d9a679;
+}
+.vmh-hair {
+  fill: #201a17;
+}
+.vmh-beard {
+  fill: #2b221d;
+}
+.vmh-hoodie {
+  fill: #14b8a6;
+}
+.vmh-hood {
+  fill: #0d9488;
+}
+.vmh-pants {
+  fill: #1f2937;
+}
+.vmh-shoe {
+  fill: #0f172a;
+}
+.vmh-zip {
+  stroke: #0d9488;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.vmh-pocket {
+  fill: none;
+  stroke: #0d9488;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+.vmh-brow {
+  fill: #201a17;
+}
+.vmh-eye {
+  fill: #1a1410;
+}
+.vmh-mouth {
+  fill: none;
+  stroke: #7c4a32;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+.vmh-glasses {
+  fill: none;
+  stroke: #0f2b30;
+  stroke-width: 1.8;
+}
+.vmh-glasses circle {
+  fill: rgba(94, 234, 212, 0.12);
+}
+
+/* Head bobs subtly at all times */
+.vmh-head {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: vmh-head-idle 5s ease-in-out infinite;
+}
+@keyframes vmh-head-idle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* Whole body has a gentle breathing bob when idle */
+.vmh-body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* Special limbs hidden by default */
+.vmh-wave,
+.vmh-point,
+.vmh-envelope {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.vmh-wave {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.vmh-point {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+.vmh-envelope {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.vmh-envelope rect {
+  fill: #f8fafc;
+  stroke: #94a3b8;
+  stroke-width: 1;
+}
+.vmh-envelope-flap {
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 1;
+}
+
+/* Legs + arms pivot from the shoulder / hip for the walk cycle */
+.vmh-leg,
+.vmh-arm {
+  transform-box: fill-box;
+}
+.vmh-leg {
+  transform-origin: 50% 0%;
+}
+.vmh-arm {
+  transform-origin: 50% 8%;
+}
+
+/* ============================================================
+   IDLE POSE (page still) — soft breathing, feet planted
+   ============================================================ */
+.vm-human[data-pose="idle"] .vmh-body,
+.vm-human[data-pose="wave"] .vmh-body,
+.vm-human[data-pose="point"] .vmh-body,
+.vm-human[data-pose="mail"] .vmh-body {
+  animation: vmh-breathe 4.2s ease-in-out infinite;
+}
+@keyframes vmh-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
+/* ============================================================
+   WALK CYCLE (active while scrolling)
+   Legs stride out of phase, arms counter-swing, body bobs.
+   ============================================================ */
+.vm-human[data-pose="walk"] .vmh-leg-front {
+  animation: vmh-stride 0.5s ease-in-out infinite;
+}
+.vm-human[data-pose="walk"] .vmh-leg-back {
+  animation: vmh-stride 0.5s ease-in-out infinite reverse;
+}
+@keyframes vmh-stride {
+  0% {
+    transform: rotate(22deg);
+  }
+  50% {
+    transform: rotate(-22deg);
+  }
+  100% {
+    transform: rotate(22deg);
+  }
+}
+
+.vm-human[data-pose="walk"] .vmh-arm-front {
+  animation: vmh-swing 0.5s ease-in-out infinite reverse;
+}
+.vm-human[data-pose="walk"] .vmh-arm-back {
+  animation: vmh-swing 0.5s ease-in-out infinite;
+}
+@keyframes vmh-swing {
+  0% {
+    transform: rotate(18deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+  100% {
+    transform: rotate(18deg);
+  }
+}
+
+.vm-human[data-pose="walk"] .vmh-body {
+  animation: vmh-walk-bob 0.5s ease-in-out infinite;
+}
+@keyframes vmh-walk-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25%,
+  75% {
+    transform: translateY(-3px);
+  }
+}
+
+.vm-human[data-pose="walk"] .vmh-head {
+  animation: vmh-walk-bob 0.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   WAVE (Landing / top of page)
+   ============================================================ */
+.vm-human[data-pose="wave"] .vmh-wave {
+  opacity: 1;
+  animation: vmh-wave-anim 1s ease-in-out infinite;
+}
+@keyframes vmh-wave-anim {
+  0%,
+  100% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-24deg);
+  }
+}
+.vm-human[data-pose="wave"] .vmh-arm-front {
+  opacity: 0;
+}
+.vm-human[data-pose="wave"] .vmh-head {
+  animation: vmh-head-tilt 1s ease-in-out infinite;
+}
+@keyframes vmh-head-tilt {
+  0%,
+  100% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+
+/* ============================================================
+   POINT (Work) — presents his projects to the right
+   ============================================================ */
+.vm-human[data-pose="point"] .vmh-point {
+  opacity: 1;
+  animation: vmh-point-anim 1.6s ease-in-out infinite;
+}
+@keyframes vmh-point-anim {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-8deg) translateX(3px);
+  }
+}
+.vm-human[data-pose="point"] .vmh-arm-front {
+  opacity: 0;
+}
+.vm-human[data-pose="point"] .vmh-head {
+  animation: vmh-head-nod 1.6s ease-in-out infinite;
+}
+@keyframes vmh-head-nod {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* ============================================================
+   MAIL (Contact) — sends an envelope off
+   ============================================================ */
+.vm-human[data-pose="mail"] .vmh-envelope {
+  opacity: 1;
+  animation: vmh-mail-fly 2.4s ease-in infinite;
+}
+@keyframes vmh-mail-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(40px, -50px) scale(0.8) rotate(12deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(74px, -92px) scale(0.4) rotate(20deg);
+  }
+}
+.vm-human[data-pose="mail"] .vmh-arm-front {
+  animation: vmh-swing 1.2s ease-in-out infinite;
+}
+
+/* ============================================================
+   RESPONSIVE / ACCESSIBILITY
+   Hide on tablet / mobile and when the gutter is too narrow, so
+   he never crowds the content column.
+   ============================================================ */
+@media (max-width: 1200px), (pointer: coarse) {
+  .vm-human {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vm-human {
+    display: none;
+  }
+}

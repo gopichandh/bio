@@ -1,10 +1,18 @@
+/* The Contact section now blends with the shared data-center background —
+   no solid fill. A soft top gradient gives it separation without a hard
+   edge, so it flows seamlessly out of the Credentials section above. */
 .contact-section {
   margin: auto;
-  padding-bottom: 100px;
-  margin-top: 100px;
+  padding-bottom: 90px;
+  margin-top: 120px;
+  padding-top: 40px;
   position: relative;
   z-index: 2;
-  background-color: var(--backgroundColor);
+  background: linear-gradient(
+    180deg,
+    rgba(94, 234, 212, 0.03) 0%,
+    rgba(94, 234, 212, 0) 40%
+  );
 }
 
 .contact-section h3 {
@@ -12,17 +20,36 @@
   font-weight: 400;
   text-transform: uppercase;
   margin: 0;
+  letter-spacing: 0.01em;
 }
 
+.contact-intro {
+  margin: 14px 0 0;
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #9aa6b2;
+}
+
+/* Two columns pushed to opposite edges of the section — the form anchors the
+   left, the "Connect" panel is spread out on the far right. Generous gap so
+   nothing feels congested. */
 .contact-flex {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(60px, 10vw, 140px);
+  margin-top: 46px;
 }
 
 .contact-flex h4 {
-  font-weight: 500;
+  font-weight: 600;
   margin: 0;
-  opacity: 0.6;
+  color: var(--accentColor);
+  opacity: 0.9;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
 .contact-box {
@@ -30,14 +57,196 @@
   flex-direction: column;
 }
 
+/* Right-hand info column: pushed to the far right and spread out with airy
+   spacing so the links breathe across the panel. */
+.contact-info-box {
+  flex: 0 0 auto;
+  align-items: flex-end;
+  text-align: right;
+  gap: 8px;
+}
+
+.contact-social-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.contact-box a.contact-social {
+  margin-bottom: 0;
+}
+
+.contact-based-block {
+  margin-top: 40px;
+}
+
 .contact-flex p {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  color: #c2ccd6;
+  font-size: 16px;
 }
 
 a.contact-social {
-  font-size: 25px;
-  border-bottom: 1px solid #ccc;
+  font-size: 24px;
+  font-weight: 500;
+  color: #eef4f3;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  padding-bottom: 3px;
+  transition: color 0.25s ease, border-color 0.25s ease, gap 0.25s ease;
+}
+
+a.contact-social svg {
+  color: var(--accentColor);
+  font-size: 0.85em;
+}
+
+a.contact-social:hover {
+  color: var(--accentColor);
+  border-color: var(--accentColor);
+  gap: 14px;
+}
+
+/* -------- Full-width professional footer -------- */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 70px;
+  padding: 22px clamp(20px, 6vw, 90px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  color: #6b7482;
+  letter-spacing: 0.02em;
+}
+
+.site-footer .footer-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-footer .footer-credit {
+  color: #6b7482;
+}
+
+.site-footer .footer-credit span {
+  color: #8f99a8;
+  font-weight: 500;
+}
+
+/* -------- Contact form (FormSubmit → vilaspassions@gmail.com) -------- */
+.contact-form-box {
+  flex: 0 1 480px;
+  max-width: 480px;
+  background: linear-gradient(160deg, rgba(94, 234, 212, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 26px 28px 30px;
+  backdrop-filter: blur(4px);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.contact-field-row {
+  display: flex;
+  gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: #eae5ec;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #7c8494;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accentColor);
+  background: rgba(94, 234, 212, 0.05);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.contact-submit {
+  align-self: flex-start;
+  background-color: var(--accentColor);
+  color: #061014;
+  border: none;
+  border-radius: 40px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.contact-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(94, 234, 212, 0.32);
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.contact-note {
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.contact-note-ok {
+  color: var(--accentColor);
+}
+
+.contact-note-err {
+  color: #ff8080;
+}
+
+.contact-mailto {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accentColor);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contact-based {
+  margin-top: 24px;
 }
 
 .contact-box h2 {
@@ -97,6 +306,22 @@ a.contact-social {
     gap: 40px;
   }
 
+  .contact-form-box {
+    flex: 1 1 auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .contact-info-box {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .contact-social-list {
+    align-items: flex-start;
+  }
+
   .contact-flex p {
     margin-bottom: 0px;
   }
@@ -112,5 +337,32 @@ a.contact-social {
 
   .contact-container {
     width: calc(100% - 25px);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .contact-section h3 {
+    font-size: 34px;
+  }
+
+  /* Stack the Name / Email fields on narrow phones so they aren't cramped */
+  .contact-field-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .contact-form-box {
+    padding: 22px 20px 24px;
+  }
+
+  a.contact-social {
+    font-size: 18px;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
   }
 }

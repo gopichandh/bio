@@ -1,0 +1,142 @@
+/* Boot terminal — fullscreen typing sequence shown once on load */
+
+.boot-terminal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(6, 12, 20, 0.92),
+    rgba(2, 4, 8, 0.98)
+  );
+  backdrop-filter: blur(3px);
+  animation: boot-fade-in 0.35s ease;
+}
+
+@keyframes boot-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.boot-window {
+  width: min(680px, 92vw);
+  max-height: 80vh;
+  background: rgba(8, 14, 22, 0.98);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(94, 234, 212, 0.12);
+  overflow: hidden;
+  font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
+
+.boot-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.boot-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.boot-red {
+  background: #ff5f57;
+}
+.boot-amber {
+  background: #febc2e;
+}
+.boot-green {
+  background: #28c840;
+}
+
+.boot-title {
+  margin-left: 10px;
+  font-size: 12.5px;
+  color: #8b97a7;
+}
+
+.boot-skip {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  color: var(--accentColor);
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: inherit;
+}
+.boot-skip:hover {
+  background: rgba(94, 234, 212, 0.15);
+}
+
+.boot-body {
+  padding: 18px 20px 24px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #cfe;
+  overflow-y: auto;
+  max-height: calc(80vh - 44px);
+}
+
+.boot-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.boot-line.cmd {
+  color: #eef3f8;
+}
+.boot-line.ok {
+  color: #5eead4;
+}
+.boot-line.dim {
+  color: #8b97a7;
+}
+.boot-line.head {
+  color: #febc2e;
+}
+.boot-line.pod {
+  color: #9ad0ff;
+}
+
+.boot-caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  margin-left: 2px;
+  background: var(--accentColor);
+  vertical-align: text-bottom;
+  animation: boot-blink 0.9s steps(1, end) infinite;
+}
+
+@keyframes boot-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-caret {
+    animation: none;
+  }
+}

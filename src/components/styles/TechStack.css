@@ -1,0 +1,131 @@
+/* Clean, categorized skills grid — replaces the heavy WebGL sphere pit.
+   Fast to paint, fully accessible, and clearly shows every skill. */
+
+.techstack {
+  width: var(--cWidth);
+  max-width: 1200px;
+  height: auto;
+  margin: 120px auto;
+  position: relative;
+  overflow: visible;
+}
+
+.techstack h2 {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  font-size: clamp(38px, 5vw, 70px);
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin: 0 0 60px;
+  background: linear-gradient(0deg, #0d9488, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.tech-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  transition: transform 0.3s ease, border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(94, 234, 212, 0.5);
+  background: rgba(94, 234, 212, 0.06);
+}
+
+.tech-card h3 {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--accentColor);
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #dfe4ec;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Blinking "● Online" status light next to each skill */
+.tech-status {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 5px rgba(52, 211, 153, 0.8);
+  flex-shrink: 0;
+  animation: tech-online 2.4s ease-in-out infinite;
+}
+
+@keyframes tech-online {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(52, 211, 153, 0.8);
+  }
+  50% {
+    opacity: 0.35;
+    box-shadow: 0 0 2px rgba(52, 211, 153, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-status {
+    animation: none;
+  }
+}
+
+.tech-card:hover .tech-chip {
+  border-color: rgba(94, 234, 212, 0.3);
+}
+
+@media only screen and (max-width: 1024px) {
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .techstack {
+    margin: 80px auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .tech-card {
+    padding: 22px;
+  }
+}

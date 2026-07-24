@@ -1,0 +1,95 @@
+/* Scroll progress styled as a CI/CD deployment pipeline (fixed top bar) */
+
+.scroll-pipeline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  pointer-events: none;
+}
+
+.pipeline-track {
+  height: 3px;
+  width: 100%;
+  background: rgba(94, 234, 212, 0.1);
+  overflow: hidden;
+}
+
+.pipeline-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22d3ee, #5eead4);
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.7);
+  transition: width 0.12s linear;
+}
+
+.pipeline-stages {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  display: flex;
+  gap: 14px;
+  padding: 5px 12px;
+  background: rgba(8, 14, 22, 0.7);
+  border: 1px solid rgba(94, 234, 212, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.pipeline-stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #6b7787;
+  transition: color 0.3s ease;
+}
+
+.stage-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3a4556;
+  transition: 0.3s ease;
+}
+
+.pipeline-stage.stage-done {
+  color: #b9c6d4;
+}
+.pipeline-stage.stage-done .stage-dot {
+  background: #5eead4;
+  box-shadow: 0 0 6px rgba(94, 234, 212, 0.7);
+}
+
+.pipeline-stage.stage-active {
+  color: var(--accentColor);
+}
+.pipeline-stage.stage-active .stage-dot {
+  animation: stage-pulse 1s ease-in-out infinite;
+}
+
+@keyframes stage-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px rgba(94, 234, 212, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(94, 234, 212, 0.95);
+    transform: scale(1.35);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .pipeline-stages {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipeline-stage.stage-active .stage-dot {
+    animation: none;
+  }
+}

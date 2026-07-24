@@ -1,0 +1,119 @@
+/* Konami-code "datacenter alarm" mode — red pulsing overlay + siren banner */
+
+.konami-alarm {
+  position: fixed;
+  inset: 0;
+  z-index: 11000;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.konami-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 0, 0, 0) 40%,
+    rgba(255, 0, 0, 0.28) 100%
+  );
+  animation: konami-pulse 0.7s ease-in-out infinite;
+}
+
+@keyframes konami-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.konami-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 34px;
+  background: rgba(20, 0, 0, 0.85);
+  border: 2px solid #ff3b3b;
+  border-radius: 12px;
+  color: #ff6b6b;
+  font-weight: 800;
+  font-size: clamp(14px, 2.4vw, 22px);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 0 40px rgba(255, 40, 40, 0.6);
+  animation: konami-shake 0.35s ease-in-out infinite;
+}
+
+@keyframes konami-shake {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-51%, -50%) rotate(-0.6deg);
+  }
+  75% {
+    transform: translate(-49%, -50%) rotate(0.6deg);
+  }
+}
+
+.konami-siren {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff2b2b;
+  box-shadow: 0 0 14px 4px rgba(255, 40, 40, 0.9);
+  animation: konami-siren-blink 0.5s steps(1, end) infinite;
+}
+
+@keyframes konami-siren-blink {
+  0%,
+  50% {
+    opacity: 1;
+    background: #ff2b2b;
+  }
+  51%,
+  100% {
+    opacity: 0.25;
+    background: #ffb02b;
+  }
+}
+
+.konami-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0) 0%,
+    rgba(255, 0, 0, 0.12) 50%,
+    rgba(255, 0, 0, 0) 100%
+  );
+  animation: konami-sweep 2.2s linear infinite;
+}
+
+@keyframes konami-sweep {
+  0% {
+    top: -40%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .konami-flash,
+  .konami-banner,
+  .konami-siren,
+  .konami-scanline {
+    animation-duration: 2s;
+  }
+}

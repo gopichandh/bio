@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="40" fill="#ffffff"/>
+  <g fill="#7B42BC">
+    <polygon points="96,70 132,90 132,132 96,112"/>
+    <polygon points="140,94 176,114 176,156 140,136"/>
+    <polygon points="96,120 132,140 132,182 96,162"/>
+  </g>
+  <text x="50%" y="212" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="800" fill="#7B42BC">Terraform</text>
+</svg>

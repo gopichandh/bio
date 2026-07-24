@@ -15,15 +15,30 @@
   flex-direction: column;
   gap: 8px;
   z-index: 999;
-  padding: 10px;
+  padding: 16px 14px;
+  /* Lightly-shaded vertical rail: a soft translucent background with a subtly
+     visible shaded border on the RIGHT edge, so the icons (VM / LinkedIn /
+     GitHub / web / gmail) sit cleanly to the left of a delicate divider line
+     for a polished, production-grade look. */
+  background: linear-gradient(
+    180deg,
+    rgba(94, 234, 212, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-right: 1px solid rgba(94, 234, 212, 0.28);
+  border-radius: 0 14px 14px 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 2px 0 18px rgba(0, 0, 0, 0.18);
 }
 .social-icons:hover {
   transition: 0.3s;
-  color: var(--backgroundColor);
 }
 .social-icons a:hover {
-  color: var(--backgroundColor);
-  /* transform: scale(1.2); */
+  /* Highlight in the accent teal (was background-colour, which made the
+     icon vanish against the dark page). */
+  color: var(--accentColor);
+  transform: translate(-50%, -50%) scale(1.18);
 }
 .social-icons span {
   width: 50px;
@@ -47,6 +62,7 @@
   position: absolute;
   z-index: 99;
   display: flex;
+  align-items: center;
   gap: 5px;
   bottom: 40px;
   right: 0;
@@ -56,21 +72,151 @@
   font-size: 15px;
   line-height: 15px;
   font-weight: 600;
-  color: #5e5e5e;
+  color: #b6c4c2;
   cursor: pointer;
   transition: 0.5s;
   transform-origin: left bottom;
   transform: translateX(100%) rotateZ(-90deg);
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  font-family: inherit;
+  animation: resumeFloat 2.6s ease-in-out infinite;
 }
 .resume-button:hover {
   color: #fff;
+  animation-play-state: paused;
 }
-div.resume-button span {
-  color: #fff;
+.resume-button .resume-icon {
+  color: var(--accentColor, #5eeadf);
   font-size: 17px;
   margin-top: -1px;
   display: flex;
   align-items: center;
+  filter: drop-shadow(0 0 6px rgba(94, 234, 223, 0.7));
+  animation: resumeIconWiggle 2.6s ease-in-out infinite;
+}
+/* Soft radial glow that breathes behind the button */
+.resume-button .resume-glow {
+  position: absolute;
+  inset: -14px -18px;
+  border-radius: 40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(94, 234, 223, 0.35),
+    rgba(94, 234, 223, 0) 70%
+  );
+  z-index: -1;
+  pointer-events: none;
+  animation: resumeGlowPulse 2.6s ease-in-out infinite;
+}
+/* Little floating tooltip that peeks to invite a click. It fades in whenever
+   the visitor scrolls down (toggled via .resume-attn-hint-show) and also on
+   hover, so the résumé always announces itself as they read the page. */
+.resume-button .resume-attn-hint {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(6, 12, 20, 0.92);
+  border: 1px solid rgba(94, 234, 223, 0.5);
+  color: #d7fffb;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  transform-origin: bottom right;
+  opacity: 0;
+  transform: translateY(6px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.resume-button .resume-attn-hint-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.resume-button .resume-attn-hint::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: rgba(6, 12, 20, 0.92);
+  border-right: 1px solid rgba(94, 234, 223, 0.5);
+  border-bottom: 1px solid rgba(94, 234, 223, 0.5);
+  transform: rotate(45deg);
+}
+.resume-button:hover .resume-attn-hint {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Each downward scroll toggles .resume-jump for a single hop, nudging the
+   button so it playfully bounces to catch the eye. Overrides resumeFloat for
+   the duration of the hop. */
+.resume-button.resume-jump {
+  animation: resumeHop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes resumeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes resumeIconWiggle {
+  0%,
+  88%,
+  100% {
+    transform: rotate(0deg);
+  }
+  92% {
+    transform: rotate(-14deg);
+  }
+  96% {
+    transform: rotate(12deg);
+  }
+}
+@keyframes resumeGlowPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+@keyframes resumeHop {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-12px);
+  }
+  55% {
+    transform: translateY(3px);
+  }
+  78% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .resume-button,
+  .resume-button.resume-jump,
+  .resume-button .resume-icon,
+  .resume-button .resume-glow,
+  .resume-button .resume-attn-hint {
+    animation: none;
+  }
 }
 .check-line {
   position: fixed;

@@ -1,0 +1,81 @@
+/* QuoteBox — dynamic rotating SRE/DevOps quote in the footer.
+   Design-system: dark card, hairline border, teal accent, muted body. */
+
+.quote-box {
+  position: relative;
+  margin-top: 60px;
+  padding: 30px 34px 30px 62px;
+  border: 1px solid rgba(94, 234, 212, 0.28);
+  border-left: 3px solid var(--accentColor);
+  border-radius: 16px;
+  background: linear-gradient(
+    150deg,
+    rgba(94, 234, 212, 0.09),
+    rgba(10, 20, 26, 0.55)
+  );
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(94, 234, 212, 0.04);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quote-box:hover {
+  border-color: rgba(94, 234, 212, 0.55);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4),
+    0 0 34px rgba(94, 234, 212, 0.18);
+}
+
+.quote-mark {
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  font-size: 66px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--accentColor);
+  opacity: 0.85;
+}
+
+.quote-body {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.quote-body.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quote-text {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #f4fffd;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+}
+
+.quote-author {
+  margin: 12px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--accentColor);
+}
+
+@media only screen and (max-width: 900px) {
+  .quote-box {
+    margin-top: 40px;
+    padding: 22px 22px 22px 46px;
+  }
+
+  .quote-text {
+    font-size: 19px;
+  }
+
+  .quote-mark {
+    font-size: 48px;
+  }
+}

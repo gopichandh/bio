@@ -1,0 +1,340 @@
+/* ================= Keep the Datacenter Cool — mini-game ================= */
+
+.dcg {
+  position: relative;
+  width: var(--cWidth);
+  max-width: 1200px;
+  margin: auto;
+  padding: 90px 0;
+  box-sizing: border-box;
+}
+
+.dcg-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.dcg-head {
+  text-align: center;
+  max-width: 640px;
+}
+
+.dcg-chip {
+  display: inline-block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--accentColor);
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.dcg-head h2 {
+  font-size: clamp(28px, 4.4vw, 52px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #fff;
+}
+
+.dcg-head h2 span {
+  color: var(--accentColor);
+}
+
+.dcg-head p {
+  color: #a0a0a8;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---- HUD ---- */
+.dcg-hud {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.dcg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 74px;
+}
+
+.dcg-stat strong {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.dcg-stat span {
+  font-size: 12px;
+  color: #8b8b95;
+  margin-top: 4px;
+}
+
+.dcg-timer strong {
+  color: var(--accentColor);
+}
+
+.dcg-progress {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.dcg-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22d3ee, var(--accentColor));
+  box-shadow: 0 0 14px rgba(94, 234, 212, 0.7);
+  transition: width 0.25s ease;
+}
+
+/* ---- Grid of servers ---- */
+.dcg-grid {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.dcg-cell {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+  overflow: hidden;
+}
+
+.dcg-cell.cool {
+  box-shadow: inset 0 0 18px rgba(94, 234, 212, 0.06);
+}
+
+.dcg-cell.cool:hover {
+  border-color: rgba(94, 234, 212, 0.4);
+  box-shadow: 0 0 18px rgba(94, 234, 212, 0.18);
+}
+
+.dcg-cell.hot {
+  border-color: rgba(248, 113, 113, 0.8);
+  background: rgba(248, 113, 113, 0.14);
+  box-shadow: 0 0 26px rgba(248, 113, 113, 0.5);
+  animation: dcgPulse 0.7s ease-in-out infinite;
+}
+
+@keyframes dcgPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.dcg-cell:disabled {
+  cursor: default;
+}
+
+/* little server glyph */
+.dcg-server {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 54%;
+}
+
+.dcg-server i {
+  height: 6px;
+  border-radius: 2px;
+  background: rgba(94, 234, 212, 0.5);
+}
+
+.dcg-cell.hot .dcg-server i {
+  background: rgba(255, 180, 180, 0.9);
+}
+
+.dcg-heat {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 18px;
+  animation: dcgFlicker 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes dcgFlicker {
+  from { transform: translateY(0) scale(1); opacity: 0.85; }
+  to { transform: translateY(-2px) scale(1.15); opacity: 1; }
+}
+
+/* ---- Buttons / results ---- */
+.dcg-btn {
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 1px solid var(--accentColor);
+  background: rgba(94, 234, 212, 0.1);
+  color: var(--accentColor);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dcg-btn:hover {
+  background: rgba(94, 234, 212, 0.22);
+  transform: translateY(-2px);
+}
+
+.dcg-result {
+  text-align: center;
+  color: #a0a0a8;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+/* ================= Medal / victory overlay ================= */
+.dcg-medal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 8, 16, 0.72);
+  backdrop-filter: blur(6px);
+  animation: dcgFade 0.4s ease;
+}
+
+@keyframes dcgFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dcg-medal-card {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 420px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(20, 28, 44, 0.95), rgba(12, 18, 30, 0.95));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(94, 234, 212, 0.25);
+  animation: dcgPop 0.5s cubic-bezier(0.18, 1.4, 0.4, 1);
+}
+
+@keyframes dcgPop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.dcg-medal-card h3 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  margin: 18px 0 10px;
+}
+
+.dcg-medal-card p {
+  color: #a0a0a8;
+  line-height: 1.6;
+  margin: 0 0 22px;
+}
+
+/* medal graphic */
+.dcg-medal {
+  position: relative;
+  width: 120px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+.dcg-medal-ribbon {
+  position: absolute;
+  top: 0;
+  width: 26px;
+  height: 78px;
+  background: linear-gradient(180deg, #22d3ee, #0ea5b7);
+}
+
+.dcg-medal-ribbon.left {
+  left: 38px;
+  transform: rotate(12deg);
+}
+
+.dcg-medal-ribbon.right {
+  right: 38px;
+  transform: rotate(-12deg);
+}
+
+.dcg-medal-disc {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe9a8, #f5b301 55%, #b8860b);
+  border: 4px solid #fff3c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(245, 179, 1, 0.7);
+  animation: dcgSpinMedal 4s linear infinite;
+}
+
+@keyframes dcgSpinMedal {
+  0%, 100% { transform: translateX(-50%) rotate(-8deg); }
+  50% { transform: translateX(-50%) rotate(8deg); }
+}
+
+.dcg-medal-disc span {
+  font-size: 40px;
+  color: #7a5c00;
+  line-height: 1;
+}
+
+/* confetti */
+.dcg-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dcg-confetti i {
+  position: absolute;
+  top: -12px;
+  left: calc((var(--n) * 2.5%) );
+  width: 8px;
+  height: 14px;
+  background: hsl(calc(var(--n) * 37), 85%, 60%);
+  opacity: 0.9;
+  animation: dcgConfetti 2.6s linear infinite;
+  animation-delay: calc(var(--n) * -0.13s);
+}
+
+@keyframes dcgConfetti {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0.7; }
+}
+
+@media only screen and (max-width: 768px) {
+  .dcg-grid { max-width: 100%; }
+  .dcg-hud { flex-wrap: wrap; justify-content: center; }
+}

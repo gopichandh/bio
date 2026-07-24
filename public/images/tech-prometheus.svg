@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="40" fill="#ffffff"/>
+  <path d="M128 60 a44 44 0 1 0 30 76 l-16 -16 a22 22 0 1 1 0 -44 z" fill="#E6522C"/>
+  <circle cx="128" cy="104" r="10" fill="#E6522C"/>
+  <text x="50%" y="212" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="800" fill="#E6522C">Prometheus</text>
+</svg>

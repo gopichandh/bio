@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="40" fill="#ffffff"/>
+  <circle cx="128" cy="112" r="52" fill="none" stroke="#D24939" stroke-width="12"/>
+  <circle cx="110" cy="104" r="9" fill="#335061"/>
+  <circle cx="146" cy="104" r="9" fill="#335061"/>
+  <text x="50%" y="212" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="800" fill="#D24939">Jenkins</text>
+</svg>

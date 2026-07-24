@@ -7,23 +7,34 @@ const Landing = ({ children }: PropsWithChildren) => {
       <div className="landing-section" id="landingDiv">
         <div className="landing-container">
           <div className="landing-intro">
-            <h2>Hello! I'm</h2>
+            <h2>Hello, I&apos;m</h2>
             <h1>
-              AKASH
+              VILAS
               <br />
-              <span>MALHOTRA</span>
+              <span>MANKALA</span>
             </h1>
-          </div>
-          <div className="landing-info">
-            <h3>Co-Founder &</h3>
-            <h2 className="landing-info-h2">
-              <div className="landing-h2-1">Tech</div>
-              <div className="landing-h2-2">Business</div>
-            </h2>
-            <h2>
-              <div className="landing-h2-info">Business</div>
-              <div className="landing-h2-info-1">Tech</div>
-            </h2>
+            <h3 className="landing-role">Senior Site Reliability Architect</h3>
+            <p className="landing-tagline">
+              13+ years architecting resilient, self-healing cloud platforms —
+              Kubernetes, AWS, and GitOps automation engineered to stay fast,
+              observable, and always on.
+            </p>
+            <div className="landing-cta">
+              <a
+                href="#contact"
+                className="landing-btn landing-btn-primary"
+                data-cursor="disable"
+              >
+                Get in touch
+              </a>
+              <a
+                href="#career"
+                className="landing-btn landing-btn-ghost"
+                data-cursor="disable"
+              >
+                View my experience
+              </a>
+            </div>
           </div>
         </div>
         {children}

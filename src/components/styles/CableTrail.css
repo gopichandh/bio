@@ -1,0 +1,10 @@
+/* Cursor-following glowing network cable trail */
+
+.cable-trail {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9500; /* above content, below cursor (which is higher) */
+  pointer-events: none;
+}

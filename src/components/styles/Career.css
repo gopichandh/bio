@@ -8,7 +8,7 @@
   opacity: 1;
   height: auto;
   margin: auto;
-  margin-bottom: 250px;
+  margin-bottom: 120px;
   padding: 120px 0px;
 }
 
@@ -24,6 +24,8 @@
   color: transparent;
   margin-top: 50px;
   margin-bottom: 90px;
+  position: relative;
+  z-index: 5;
 }
 
 .career-section h2>span {
@@ -41,45 +43,75 @@
 .career-info-box {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  padding: 24px 0;
+  margin-bottom: 0;
 }
 
-.career-info-box p {
-  width: 40%;
-  font-size: 18px;
-  font-weight: 300;
+.career-info-box + .career-info-box {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.career-points {
+  width: 42%;
   margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.career-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #c7cdd8;
+}
+
+.career-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accentColor);
+  box-shadow: 0 0 8px rgba(94, 234, 212, 0.7);
 }
 
 .career-info-in {
   display: flex;
-  width: 40%;
+  width: 42%;
   justify-content: space-between;
-  gap: 50px;
+  gap: 40px;
 }
 
 .career-info h3 {
-  font-size: 48px;
+  font-size: 20px;
   margin: 0;
-  font-weight: 500;
-  line-height: 45px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--accentColor);
+  white-space: nowrap;
 }
 
 .career-info h4 {
-  font-size: 33px;
-  line-height: 30px;
-  letter-spacing: 0.8px;
-  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0.4px;
+  font-weight: 600;
   margin: 0;
 }
 
 .career-info h5 {
   font-weight: 400;
-  letter-spacing: 0.7px;
-  font-size: 20px;
-  text-transform: capitalize;
-  margin: 10px 0px;
-  color: var(--accentColor);
+  letter-spacing: 0.4px;
+  font-size: 15px;
+  margin: 8px 0px 0;
+  color: #9aa3b2;
 }
 
 .career-timeline {
@@ -105,8 +137,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50px;
-  box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 8px #5eead4,
-    0px 0px 110px 20px #a5f3fc;
+  box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 6px #5eead4,
+    0px 0px 40px 10px rgba(165, 243, 252, 0.6);
   animation: timeline 0.8s linear infinite forwards;
 }
 
@@ -127,7 +159,7 @@
   64%,
   80% {
     box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 5px #5eead4,
-      0px 0px 110px 20px #a5f3fc;
+      0px 0px 40px 10px rgba(165, 243, 252, 0.6);
   }
 }
 
@@ -149,30 +181,29 @@
   }
 
   .career-info h4 {
-    font-size: 22px;
-    line-height: 24px;
-    width: 180px;
+    font-size: 20px;
+    line-height: 1.2;
   }
 
   .career-info h5 {
-    font-size: 17px;
+    font-size: 14px;
   }
 
   .career-info h3 {
-    font-size: 40px;
+    font-size: 18px;
   }
 
-  .career-info-box p {
+  .career-points li {
     font-size: 14px;
   }
 
   .career-info-in {
-    width: 45%;
+    width: 44%;
     gap: 20px;
   }
 
-  .career-info-box p {
-    width: 45%;
+  .career-points {
+    width: 44%;
   }
 }
 
@@ -188,15 +219,19 @@
 @media only screen and (max-width: 900px) {
   .career-info-box {
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 70px;
+    gap: 16px;
+    padding: 24px 0;
   }
 
   .career-info-in,
-  .career-info-box p {
+  .career-points {
     width: 100%;
     padding-left: 10%;
     box-sizing: border-box;
+  }
+
+  .career-info h3 {
+    white-space: normal;
   }
 
   .career-timeline {
@@ -221,15 +256,16 @@
   }
 
   .career-info-in {
-    gap: 0px;
+    gap: 12px;
+    flex-direction: column;
   }
 
   .career-info h3 {
-    font-size: 33px;
+    font-size: 16px;
   }
 
   .career-info-in,
-  .career-info-box p {
+  .career-points {
     padding-left: 5%;
   }
 

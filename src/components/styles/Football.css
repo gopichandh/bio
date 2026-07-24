@@ -1,0 +1,22 @@
+/* Fixed full-viewport canvas for the interactive football.
+   pointer-events:none so it never blocks the page; we track the pointer
+   globally and impart a "kick" when it comes near the ball. Sits above the
+   background/content but below the UI overlays. */
+
+.football-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 55;
+  pointer-events: none;
+}
+
+/* The goal tally now lives on a canvas scoreboard mounted above the goal
+   posts (see Football.tsx → drawScoreboard), right where the action happens. */
+
+@media screen and (max-width: 768px) {
+  .football-layer {
+    display: none;
+  }
+}

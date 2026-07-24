@@ -1,0 +1,47 @@
+/* Fixed, full-viewport datacenter backdrop sitting behind all content.
+   A real server-hall photograph forms the base; a transparent canvas on top
+   renders live network traffic (packets down the aisle, cross-links between
+   rack rows) and the CI/CD BUILD→TEST→DEPLOY→LIVE blip loop.
+
+   The backdrop is intentionally subtle and *evenly* dimmed across the whole
+   screen (no bright hotspot / dark corners) so the foreground content reads
+   clearly and the page feels calm and professional. */
+
+.datacenter-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #070b12;
+}
+
+/* The photographed server hall. Heavily and *uniformly* dimmed with a flat
+   dark wash so it reads as a quiet ambient texture rather than a busy image,
+   keeping every section's text crisp and legible. */
+.datacenter-photo {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(6, 10, 16, 0.82) 0%,
+      rgba(6, 10, 16, 0.78) 50%,
+      rgba(6, 10, 16, 0.82) 100%
+    ),
+    url("/images/datacenter.jpeg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: saturate(1) brightness(0.86) blur(0.5px);
+  opacity: 0.5;
+}
+
+.datacenter-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}

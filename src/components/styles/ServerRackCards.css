@@ -1,0 +1,187 @@
+.server-rack-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.server-card {
+  position: relative;
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(94, 234, 212, 0.16);
+  background: linear-gradient(
+    160deg,
+    rgba(16, 24, 39, 0.92),
+    rgba(8, 12, 20, 0.92)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 8px 26px rgba(0, 0, 0, 0.35);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease, box-shadow 0.28s ease;
+  cursor: default;
+  outline: none;
+}
+
+.server-card:hover,
+.server-card:focus-visible {
+  transform: scale(1.035) translateY(-3px);
+  border-color: rgba(94, 234, 212, 0.55);
+  box-shadow: 0 0 22px rgba(94, 234, 212, 0.28),
+    0 14px 34px rgba(0, 0, 0, 0.45),
+    inset 0 0 12px rgba(94, 234, 212, 0.08);
+}
+
+.server-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.server-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.9);
+  flex-shrink: 0;
+  animation: srv-blink 1.8s ease-in-out infinite;
+}
+
+@keyframes srv-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.server-id {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  margin-right: auto;
+}
+
+.server-name {
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accentColor);
+}
+
+.server-role {
+  font-size: 0.7rem;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.server-region {
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: rgba(148, 163, 184, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 6px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.server-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.srv-metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.72rem;
+  color: rgba(203, 213, 225, 0.8);
+  margin-bottom: 4px;
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+}
+
+.srv-metric-val {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.srv-metric-val.ok {
+  color: #34d399;
+}
+.srv-metric-val.warn {
+  color: #fbbf24;
+}
+.srv-metric-val.crit {
+  color: #f87171;
+}
+
+.srv-meter {
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.14);
+  overflow: hidden;
+}
+
+.srv-meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.2s linear;
+}
+
+.srv-meter-fill.ok {
+  background: linear-gradient(90deg, #14b8a6, #34d399);
+}
+.srv-meter-fill.warn {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+.srv-meter-fill.crit {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.server-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  font-size: 0.72rem;
+}
+
+.server-uptime-label {
+  color: rgba(148, 163, 184, 0.7);
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+}
+
+.server-uptime-val {
+  color: rgba(226, 232, 240, 0.92);
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  margin-right: auto;
+}
+
+.server-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.32);
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .server-card,
+  .server-status-dot,
+  .srv-meter-fill {
+    transition: none;
+    animation: none;
+  }
+}

@@ -1,0 +1,139 @@
+.power-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(94, 234, 212, 0.28);
+  background: rgba(10, 14, 23, 0.72);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.power-switch:hover {
+  border-color: rgba(94, 234, 212, 0.6);
+  transform: translateY(-1px);
+}
+
+.power-switch-track {
+  position: relative;
+  width: 22px;
+  height: 30px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #10151f, #060a11);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.power-switch-lever {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 15px;
+  height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #2a3446, #1a2130);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: top 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.28s ease, box-shadow 0.28s ease;
+}
+
+.power-switch-notch {
+  position: absolute;
+  left: 50%;
+  top: 3px;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.6);
+}
+
+.power-switch.is-light .power-switch-lever {
+  top: 2px;
+  background: linear-gradient(180deg, #7dd3c0, #34d399);
+  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.6),
+    0 0 12px rgba(94, 234, 212, 0.5);
+}
+
+.power-switch-io {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 800;
+  color: rgba(148, 163, 184, 0.55);
+  pointer-events: none;
+}
+
+.power-io-on {
+  top: 1px;
+}
+
+.power-io-off {
+  bottom: 1px;
+}
+
+.power-switch.is-light {
+  border-color: rgba(94, 234, 212, 0.7);
+  box-shadow: 0 0 14px rgba(94, 234, 212, 0.35);
+}
+
+.power-switch.is-light .power-io-on {
+  color: var(--accentColor);
+}
+
+/* ============================================================
+   LIGHT THEME — applied when <html> has .theme-light
+   Curated override of the core CSS variables + a few surfaces.
+   ============================================================ */
+:root.theme-light {
+  --backgroundColor: #eef2f7;
+  --accentColor: #0d9488;
+  color: #0f172a;
+  color-scheme: light;
+}
+
+:root.theme-light body {
+  background-color: #e6ebf2;
+  color: #0f172a;
+}
+
+:root.theme-light .container-main,
+:root.theme-light #smooth-content {
+  color: #0f172a;
+}
+
+:root.theme-light h1,
+:root.theme-light h2,
+:root.theme-light h3,
+:root.theme-light h4,
+:root.theme-light h5,
+:root.theme-light h6,
+:root.theme-light p,
+:root.theme-light span,
+:root.theme-light a,
+:root.theme-light li {
+  color: #0f172a;
+}
+
+/* Slightly tone-down the datacenter canvas so text stays legible on light bg */
+:root.theme-light .datacenter-bg {
+  opacity: 0.32;
+  filter: invert(0.9) hue-rotate(150deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .power-switch,
+  .power-switch-lever {
+    transition: none;
+  }
+}

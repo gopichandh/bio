@@ -1,0 +1,149 @@
+.ping-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.ping-terminal {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(94, 234, 212, 0.18);
+  background: #05080f;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.ping-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  background: linear-gradient(180deg, #161b26, #0d1017);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.ping-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.ping-dot.red {
+  background: #ff5f56;
+}
+.ping-dot.amber {
+  background: #ffbd2e;
+}
+.ping-dot.green {
+  background: #27c93f;
+}
+
+.ping-bar-title {
+  margin-left: 8px;
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.ping-body {
+  padding: 14px 16px;
+  min-height: 210px;
+  max-height: 260px;
+  overflow-y: auto;
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.ping-hint {
+  margin: 0;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.ping-hint strong {
+  color: var(--accentColor);
+}
+
+.ping-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: ping-appear 0.16s ease;
+}
+
+.ping-line.cmd {
+  color: var(--accentColor);
+  font-weight: 700;
+}
+.ping-line.out {
+  color: rgba(203, 213, 225, 0.92);
+}
+.ping-line.stat {
+  color: rgba(148, 163, 184, 0.85);
+}
+.ping-line.ok {
+  color: #34d399;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+@keyframes ping-appear {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ping-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: var(--accentColor);
+  animation: ping-blink 1s steps(2) infinite;
+}
+
+@keyframes ping-blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ping-btn {
+  align-self: flex-start;
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #04121a;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #14b8a6, #34d399);
+  box-shadow: 0 6px 18px rgba(52, 211, 153, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+}
+
+.ping-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(52, 211, 153, 0.42);
+}
+
+.ping-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ping-line,
+  .ping-caret,
+  .ping-btn {
+    animation: none;
+    transition: none;
+  }
+}

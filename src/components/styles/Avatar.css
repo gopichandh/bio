@@ -1,0 +1,432 @@
+/* ============================================================
+   Avatar — a lively little "Vilas" who reacts to your scroll.
+   Lives fixed in the LOWER-LEFT corner (opposite the RoamingBot),
+   pointer-events:none so it NEVER blocks any text or controls.
+   ============================================================ */
+
+.vm-avatar {
+  position: fixed;
+  left: 18px;
+  bottom: 14px;
+  width: 180px;
+  height: 210px;
+  z-index: 58; /* below cursor(9999)/overlays; above the datacenter bg */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
+  animation: vm-avatar-in 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes vm-avatar-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Gentle idle breathing for the whole stage */
+.vm-avatar-svg {
+  display: block;
+  overflow: visible;
+  animation: vm-breathe 4.5s ease-in-out infinite;
+}
+
+@keyframes vm-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* ---------- Caption bubble ---------- */
+.vm-avatar-caption {
+  max-width: 220px;
+  margin: 0 0 6px 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #e6fffb;
+  background: linear-gradient(135deg, rgba(13, 46, 44, 0.92), rgba(9, 25, 30, 0.92));
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  border-radius: 12px 12px 12px 4px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  animation: vm-caption-in 0.45s ease both;
+}
+
+@keyframes vm-caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   SVG PART PALETTE
+   ============================================================ */
+.vm-shadow {
+  fill: rgba(0, 0, 0, 0.28);
+}
+
+/* Desk + laptop */
+.vm-desk-top {
+  fill: #1c2b33;
+  stroke: rgba(94, 234, 212, 0.25);
+  stroke-width: 0.6;
+}
+.vm-laptop-base {
+  fill: #263640;
+}
+.vm-laptop-screen {
+  fill: #0e1a1f;
+  stroke: rgba(94, 234, 212, 0.35);
+  stroke-width: 1;
+}
+.vm-laptop-glow {
+  fill: #06262b;
+  animation: vm-screen-glow 3s ease-in-out infinite;
+}
+@keyframes vm-screen-glow {
+  0%,
+  100% {
+    fill: #06262b;
+  }
+  50% {
+    fill: #0a3b40;
+  }
+}
+
+/* Code lines on the laptop */
+.vm-code rect {
+  fill: #2dd4bf;
+  opacity: 0.75;
+}
+
+/* Chair */
+.vm-chair {
+  fill: #172129;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 1;
+}
+
+/* Person */
+.vm-skin {
+  fill: #d9a679;
+}
+.vm-hair {
+  fill: #201a17;
+}
+.vm-beard {
+  fill: #2b221d;
+}
+.vm-torso {
+  fill: #14b8a6;
+}
+.vm-collar {
+  fill: none;
+  stroke: #0d9488;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.vm-brow {
+  fill: #201a17;
+}
+.vm-eye {
+  fill: #1a1410;
+}
+.vm-mouth {
+  fill: none;
+  stroke: #7c4a32;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.vm-glasses {
+  fill: none;
+  stroke: #0f2b30;
+  stroke-width: 1.6;
+}
+.vm-glasses circle {
+  fill: rgba(94, 234, 212, 0.1);
+}
+
+/* Head bobs subtly at all times, with an origin for tilts */
+.vm-head {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+  animation: vm-head-idle 5s ease-in-out infinite;
+}
+@keyframes vm-head-idle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+}
+
+/* ============================================================
+   ACTION-SPECIFIC LIMBS
+   Default: hide the special limbs; show only the relevant one.
+   ============================================================ */
+.vm-wave-arm,
+.vm-coffee,
+.vm-point-arm,
+.vm-envelope {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.vm-wave-arm {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.vm-coffee {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.vm-point-arm {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+.vm-envelope {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.vm-forearm-l,
+.vm-forearm-r {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+
+.vm-mug rect {
+  fill: #e2e8f0;
+}
+.vm-mug-handle {
+  fill: none;
+  stroke: #e2e8f0;
+  stroke-width: 2;
+}
+.vm-steam {
+  fill: none;
+  stroke: rgba(226, 232, 240, 0.7);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.vm-envelope rect {
+  fill: #f8fafc;
+  stroke: #94a3b8;
+  stroke-width: 1;
+}
+.vm-envelope-flap {
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 1;
+}
+
+/* ---------- WAVE (Landing) ---------- */
+.vm-avatar[data-action="wave"] .vm-wave-arm {
+  opacity: 1;
+  animation: vm-wave 1s ease-in-out infinite;
+}
+@keyframes vm-wave {
+  0%,
+  100% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-22deg);
+  }
+}
+.vm-avatar[data-action="wave"] .vm-head {
+  animation: vm-head-tilt 1s ease-in-out infinite;
+}
+@keyframes vm-head-tilt {
+  0%,
+  100% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+
+/* ---------- TYPE (Tech / What I Do) ---------- */
+.vm-avatar[data-action="type"] .vm-forearm-l {
+  animation: vm-type 0.28s ease-in-out infinite;
+}
+.vm-avatar[data-action="type"] .vm-forearm-r {
+  animation: vm-type 0.28s ease-in-out infinite 0.14s;
+}
+@keyframes vm-type {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+}
+.vm-avatar[data-action="type"] .vm-code rect {
+  animation: vm-code-write 1.4s steps(1) infinite;
+}
+.vm-avatar[data-action="type"] .vm-code rect:nth-child(1) {
+  animation-delay: 0s;
+}
+.vm-avatar[data-action="type"] .vm-code rect:nth-child(2) {
+  animation-delay: 0.35s;
+}
+.vm-avatar[data-action="type"] .vm-code rect:nth-child(3) {
+  animation-delay: 0.7s;
+}
+.vm-avatar[data-action="type"] .vm-code rect:nth-child(4) {
+  animation-delay: 1.05s;
+}
+@keyframes vm-code-write {
+  0% {
+    opacity: 0.15;
+    transform: scaleX(0.2);
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+  }
+  40%,
+  100% {
+    opacity: 0.85;
+    transform: scaleX(1);
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+  }
+}
+.vm-avatar[data-action="type"] .vm-laptop-glow {
+  animation: vm-screen-glow 1.2s ease-in-out infinite;
+}
+
+/* ---------- COFFEE (About / Career) ---------- */
+.vm-avatar[data-action="coffee"] .vm-coffee {
+  opacity: 1;
+  animation: vm-sip 3.4s ease-in-out infinite;
+}
+@keyframes vm-sip {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-14px) rotate(-8deg);
+  }
+}
+.vm-avatar[data-action="coffee"] .vm-steam {
+  opacity: 1;
+  animation: vm-steam-rise 2s ease-in-out infinite;
+}
+.vm-avatar[data-action="coffee"] .vm-steam-2 {
+  animation-delay: 0.6s;
+}
+@keyframes vm-steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+/* while sipping, the right typing forearm rests */
+.vm-avatar[data-action="coffee"] .vm-forearm-r {
+  opacity: 0;
+}
+
+/* ---------- PRESENT (Work) ---------- */
+.vm-avatar[data-action="present"] .vm-point-arm {
+  opacity: 1;
+  animation: vm-point 1.6s ease-in-out infinite;
+}
+@keyframes vm-point {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-10deg) translateX(3px);
+  }
+}
+.vm-avatar[data-action="present"] .vm-forearm-r {
+  opacity: 0;
+}
+.vm-avatar[data-action="present"] .vm-head {
+  animation: vm-head-nod 1.6s ease-in-out infinite;
+}
+@keyframes vm-head-nod {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+/* ---------- MAIL (Contact) ---------- */
+.vm-avatar[data-action="mail"] .vm-envelope {
+  opacity: 1;
+  animation: vm-mail-fly 2.4s ease-in infinite;
+}
+@keyframes vm-mail-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(38px, -46px) scale(0.8) rotate(12deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(70px, -84px) scale(0.4) rotate(20deg);
+  }
+}
+.vm-avatar[data-action="mail"] .vm-forearm-r {
+  animation: vm-type 0.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   RESPONSIVE / ACCESSIBILITY
+   ============================================================ */
+@media (max-width: 1024px), (pointer: coarse) {
+  .vm-avatar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vm-avatar {
+    display: none;
+  }
+}

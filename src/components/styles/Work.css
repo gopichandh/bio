@@ -143,11 +143,11 @@
 }
 
 .carousel-arrow-left {
-  left: -70px;
+  left: 8px;
 }
 
 .carousel-arrow-right {
-  right: -70px;
+  right: 8px;
 }
 
 /* ── Dot Indicators ── */
@@ -234,16 +234,6 @@
 }
 
 /* ── Responsive ── */
-@media only screen and (max-width: 1600px) {
-  .carousel-arrow-left {
-    left: -60px;
-  }
-
-  .carousel-arrow-right {
-    right: -60px;
-  }
-}
-
 @media only screen and (max-width: 1400px) {
   .work-section h2 {
     font-size: 50px;

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="40" fill="#ffffff"/>
+  <path d="M128 40 L200 128 L128 216 L56 128 Z" fill="none" stroke="#0F1689" stroke-width="12"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="central" font-family="Arial,sans-serif" font-size="30" font-weight="800" fill="#0F1689">Helm</text>
+</svg>

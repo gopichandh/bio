@@ -3,6 +3,7 @@
   max-width: var(--cMaxWidth);
   width: var(--cWidth);
   justify-content: space-between;
+  align-items: center;
   padding: 20px 0px;
   margin-bottom: -100px;
   box-sizing: border-box;
@@ -11,6 +12,18 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 9999;
+  /* Let clicks pass through the empty bar area to overlays beneath (e.g. the
+     live-status HUD in the top-right); only actual links stay interactive. */
+  pointer-events: none;
+}
+.header a,
+.header ul {
+  pointer-events: auto;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  column-gap: 26px;
 }
 .header ul {
   font-size: 12px;
@@ -19,9 +32,12 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 40px;
+  column-gap: 26px;
   row-gap: 8px;
-  align-items: end;
+  align-items: start;
+}
+.nav-home {
+  color: var(--accentColor, #5eead4);
 }
 .header ul li {
   margin-left: 0px;

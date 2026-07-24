@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="40" fill="#ffffff"/>
+  <path d="M40 176 l40 -96 l24 0 l40 96 l-24 0 l-8 -22 l-40 0 l-8 22 z m40 -42 l24 0 l-12 -34 z" fill="#D33833"/>
+  <text x="170" y="184" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="#D33833">nsible</text>
+</svg>

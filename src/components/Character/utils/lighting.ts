@@ -18,13 +18,36 @@ const setLighting = (scene: THREE.Scene) => {
   pointLight.castShadow = true;
   scene.add(pointLight);
 
+  // Fallback real lights so the character is visible even if the HDR
+  // environment map or scene.environmentIntensity is not honoured by the
+  // browser's WebGL implementation (notably some Safari builds where the
+  // three.js r155+ scene.environmentIntensity / environmentRotation Scene
+  // properties do not affect rendering). These are animated on in
+  // turnOnLights() so the reveal timing matches the original intro.
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0);
+  scene.add(ambientLight);
+
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x222233, 0);
+  hemiLight.position.set(0, 20, 0);
+  scene.add(hemiLight);
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0);
+  keyLight.position.set(2, 10, 8);
+  scene.add(keyLight);
+
+  // Ensure the property exists as a number before any GSAP tween reads it,
+  // so tweening never starts from `undefined` (which would produce NaN).
+  scene.environmentIntensity = 0;
+
   new RGBELoader()
     .setPath("/models/")
     .load("char_enviorment.hdr?v=2", function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
       scene.environmentIntensity = 0;
-      scene.environmentRotation.set(5.76, 85.85, 1);
+      if (scene.environmentRotation) {
+        scene.environmentRotation.set(5.76, 85.85, 1);
+      }
     });
 
   function setPointLight(screenLight: any) {
@@ -44,6 +67,23 @@ const setLighting = (scene: THREE.Scene) => {
     });
     gsap.to(directionalLight, {
       intensity: 1,
+      duration: duration,
+      ease: ease,
+    });
+    // Bring up the fallback lights so the model is properly lit on browsers
+    // that ignore scene.environmentIntensity.
+    gsap.to(ambientLight, {
+      intensity: 0.55,
+      duration: duration,
+      ease: ease,
+    });
+    gsap.to(hemiLight, {
+      intensity: 0.8,
+      duration: duration,
+      ease: ease,
+    });
+    gsap.to(keyLight, {
+      intensity: 1.1,
       duration: duration,
       ease: ease,
     });

@@ -1,0 +1,334 @@
+/* ============================================================
+   PhotoHero — a professional, framed "card" portrait.
+   Instead of a tall cutout dissolving into the page, the portrait
+   now sits inside a neat glass panel with a teal-accent frame,
+   a soft interior gradient and a small identity chip — a clean,
+   intentional, corporate-looking hero element on the RIGHT.
+   ============================================================ */
+
+.photo-hero {
+  position: absolute;
+  bottom: 8vh;
+  right: 0;
+  left: auto;
+  height: auto;
+  width: min(30vw, 380px);
+  z-index: 0;
+  /* The portrait's 3D tilt/parallax is driven by a document-level mousemove
+     listener. The wrapper itself is pointer-events:none so it never blocks
+     clicks, but the inner .photo-card re-enables pointer events so it can show
+     the recruiter "welcome" greeting on hover. GSAP now fades the hero with
+     autoAlpha (opacity + visibility:hidden) as the visitor scrolls past the
+     landing, so once hidden it stops hit-testing entirely and never swallows
+     clicks on the sections underneath. */
+  pointer-events: none;
+  perspective: 1200px;
+}
+
+/* Floating wrapper: gentle bob + cursor-driven 3D tilt/parallax */
+.photo-hero-float {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0)
+    rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  will-change: transform;
+  transition: transform 0.12s linear;
+}
+
+/* Gentle bob is applied to the CARD via transform (not margin) so it no
+   longer triggers layout reflow — that reflow was the source of the
+   flicker on the first image. */
+@keyframes photoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* The portrait card — a polished glass "frame" around the cutout portrait:
+   a soft dark gradient panel, a teal-accent border, a layered drop shadow and
+   a subtle inner glow, giving the first image an intentional, framed look. */
+.photo-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  overflow: visible;
+  background: linear-gradient(
+    165deg,
+    rgba(16, 30, 38, 0.55) 0%,
+    rgba(8, 18, 26, 0.42) 55%,
+    rgba(6, 14, 20, 0.6) 100%
+  );
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(94, 234, 212, 0.08) inset,
+    0 0 34px rgba(94, 234, 212, 0.16);
+  backdrop-filter: blur(6px);
+  animation: photoFloat 6s ease-in-out infinite;
+  will-change: transform;
+  /* Re-enable hover so the recruiter greeting can appear */
+  pointer-events: auto;
+}
+
+/* Decorative corner accents give the frame a "viewport / HUD" feel */
+.photo-card::before,
+.photo-card::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba(94, 234, 212, 0.6);
+  z-index: 5;
+  pointer-events: none;
+}
+.photo-card::before {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 12px;
+}
+.photo-card::after {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 12px;
+}
+
+.photo-hero-img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  -webkit-user-drag: none;
+  /* gentle bottom fade so the crop blends into the card interior */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 86%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Identity chip pinned to the bottom of the card */
+.photo-chip {
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(6, 12, 18, 0.72);
+  border: 1px solid rgba(94, 234, 212, 0.25);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.photo-chip-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
+  flex-shrink: 0;
+  animation: chipPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes chipPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.photo-chip-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.photo-chip-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #eafffb;
+}
+
+.photo-chip-role {
+  font-size: 10.5px;
+  font-weight: 300;
+  color: #8fb0ac;
+  letter-spacing: 0.02em;
+}
+
+/* Teal glow rim behind the card */
+.photo-rim {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(94, 234, 212, 0.28) 0%,
+    rgba(34, 211, 238, 0.14) 45%,
+    rgba(34, 211, 238, 0) 70%
+  );
+  filter: blur(50px);
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0;
+  animation: rimPulse 6s ease-in-out infinite;
+}
+
+@keyframes rimPulse {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ---- Responsive sizing ---- */
+@media screen and (max-width: 1024px) {
+  .photo-hero {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    width: min(70vw, 300px);
+  }
+}
+
+/* On desktop the hero card is a fixed centerpiece anchored to the right */
+@media screen and (min-width: 1025px) {
+  .photo-hero {
+    position: fixed;
+    right: max(2vw, calc((100vw - var(--cMaxWidth)) / 2 + 1vw));
+    bottom: 10vh;
+    width: min(32vw, 460px);
+    z-index: 11;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .photo-hero {
+    right: calc((100vw - var(--cMaxWidth)) / 2 + 3vw);
+    width: min(30vw, 500px);
+  }
+}
+
+/* ============================================================
+   Recruiter greeting — fades in when the pointer hovers the
+   portrait card. Hidden by default; a friendly "Welcome" panel
+   slides up over the lower portion of the portrait on hover.
+   ============================================================ */
+.photo-welcome {
+  position: absolute;
+  z-index: 5;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 22, 28, 0.92),
+    rgba(6, 14, 20, 0.96)
+  );
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55),
+    0 0 26px rgba(94, 234, 212, 0.18);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.photo-card:hover .photo-welcome {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* When the greeting is showing, gently dim the identity chip so the two
+   panels don't fight for attention. */
+.photo-card:hover .photo-chip {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-welcome-wave {
+  font-size: 26px;
+  line-height: 1;
+  animation: photoWave 2.2s ease-in-out infinite;
+  transform-origin: 70% 80%;
+}
+
+@keyframes photoWave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(16deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(12deg);
+  }
+  80% {
+    transform: rotate(-4deg);
+  }
+}
+
+.photo-welcome-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #eafffb;
+  letter-spacing: 0.01em;
+}
+
+.photo-welcome-sub {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #a8c6c0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-card,
+  .photo-rim,
+  .photo-chip-dot,
+  .photo-welcome-wave {
+    animation: none;
+  }
+}
