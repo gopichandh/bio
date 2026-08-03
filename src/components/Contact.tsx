@@ -3,8 +3,8 @@ import { MdArrowOutward, MdCopyright } from "react-icons/md";
 import QuoteBox from "./QuoteBox";
 import "./styles/Contact.css";
 
-// Vilas's inbox. Messages submitted through the form are delivered here.
-const CONTACT_EMAIL = "vilaspassions@gmail.com";
+// Messages submitted through the form are delivered here.
+const CONTACT_EMAIL = "mallavarapu.gopichandh@gmail.com";
 // FormSubmit.co forwards submissions straight to CONTACT_EMAIL with no API
 // key or backend required (the very first submission triggers a one-time
 // confirmation email to activate the address). We use its AJAX endpoint so
@@ -38,8 +38,8 @@ const Contact = () => {
     }
   };
 
-  // Fallback: open the visitor's email client pre-addressed to Vilas so their
-  // message still reaches vilaspassions@gmail.com if the network call fails.
+  // Fallback: open the visitor's email client pre-addressed to Gopichandh so their
+  // message still reaches mallavarapu.gopichandh@gmail.com if the network call fails.
   const mailtoFallback = () => {
     const form = document.querySelector<HTMLFormElement>(".contact-form");
     const name = (form?.elements.namedItem("name") as HTMLInputElement)?.value || "";
@@ -56,19 +56,19 @@ const Contact = () => {
       <div className="contact-container">
         <h3>Contact</h3>
         <p className="contact-intro">
-          Have a role, a project, or just want to talk reliability engineering?
-          Drop a message or reach out on any channel — I usually reply within a
-          day.
+          Have a role, a project, or just want to talk about building great
+          experiences? Drop a message or reach out on any channel — I usually
+          reply within a day.
         </p>
         <div className="contact-flex">
           <div className="contact-box contact-form-box">
             <h4>Send a message</h4>
             <form className="contact-form" onSubmit={handleSubmit}>
-              {/* FormSubmit config — delivered to vilaspassions@gmail.com */}
+              {/* FormSubmit config — delivered to mallavarapu.gopichandh@gmail.com */}
               <input
                 type="hidden"
                 name="_subject"
-                value="New message from your portfolio"
+                value="New message from my portfolio site"
               />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
@@ -117,7 +117,7 @@ const Contact = () => {
                     onClick={mailtoFallback}
                     data-cursor="disable"
                   >
-                    Email Vilas directly
+                    Email Gopichandh directly
                   </button>{" "}
                   instead.
                 </p>
@@ -129,7 +129,7 @@ const Contact = () => {
             <h4>Connect</h4>
             <div className="contact-social-list">
               <a
-                href="https://www.linkedin.com/in/vilas-mankala/"
+                href="https://www.linkedin.com/in/gopi89/"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
@@ -138,16 +138,7 @@ const Contact = () => {
                 LinkedIn <MdArrowOutward />
               </a>
               <a
-                href="https://vmbuzz.com"
-                target="_blank"
-                rel="noreferrer"
-                data-cursor="disable"
-                className="contact-social"
-              >
-                vmbuzz.com <MdArrowOutward />
-              </a>
-              <a
-                href="https://github.com/vilasmankala"
+                href="https://github.com/gopichandh"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
@@ -158,7 +149,7 @@ const Contact = () => {
             </div>
             <div className="contact-based-block">
               <h4 className="contact-based">Based in</h4>
-              <p>Texas, USA</p>
+              <p>Austin, TX</p>
             </div>
           </div>
         </div>
@@ -170,10 +161,10 @@ const Contact = () => {
           the bottom-right, small and muted, exactly where it belongs. */}
       <footer className="site-footer">
         <span className="footer-left">
-          <MdCopyright /> 2026 · Texas, USA
+          <MdCopyright /> 2026 · Austin, TX
         </span>
         <span className="footer-credit">
-          Designed &amp; developed by <span>Vilas Mankala</span>
+          Designed &amp; developed by <span>Gopichandh Mallavarapu</span>
         </span>
       </footer>
     </div>

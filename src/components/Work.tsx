@@ -5,32 +5,32 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "vmbuzz.com",
-    category: "Personal Tech Blog",
-    tools: "Content Platform, Cloud Hosting, CI/CD, SEO",
-    image: "/images/proj-vmbuzz.svg",
-    link: "https://vmbuzz.com",
+    title: "Personal Tech Blog",
+    category: "Platform Architecture",
+    tools: "React, Vite, Netlify, SEO",
+    image: "/images/proj-portfolio-example.svg",
+    link: "#",
   },
   {
     title: "WhatsAppGPT",
     category: "AI WhatsApp Chatbot",
     tools: "OpenAI API, Python, WhatsApp Business API, Webhooks",
     image: "/images/proj-whatsappgpt.svg",
-    link: "https://github.com/vilasmankala",
+    link: "https://github.com/gopichandh",
   },
   {
     title: "AlertHub",
     category: "Unified Kubernetes Monitoring Platform",
     tools: "Cluster Topology, AI Chatbot, Alert & Incident Correlation",
     image: "/images/proj-alerthub.svg",
-    link: "https://vmbuzz.com",
+    link: "#",
   },
   {
     title: "Health Monitoring Dashboard",
     category: "Real-time EKS Cluster Health Tracking",
     tools: "Bash, Perl, HTML, CGI, Prometheus",
     image: "/images/proj-healthdash.svg",
-    link: "https://vmbuzz.com",
+    link: "#",
   },
 ];
 

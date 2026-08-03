@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedinIn, FaGlobe } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
@@ -105,7 +105,7 @@ const SocialIcons = () => {
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
           <a
-            href="https://www.linkedin.com/in/vilas-mankala/"
+            href="https://www.linkedin.com/in/gopi89/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -115,7 +115,7 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="https://github.com/vilasmankala"
+            href="https://github.com/gopichandh"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
@@ -124,17 +124,7 @@ const SocialIcons = () => {
           </a>
         </span>
         <span>
-          <a
-            href="https://vmbuzz.com"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Website vmbuzz.com"
-          >
-            <FaGlobe />
-          </a>
-        </span>
-        <span>
-          <a href="mailto:vilaspassions@gmail.com" aria-label="Email">
+          <a href="mailto:mallavarapu.gopichandh@gmail.com" aria-label="Email">
             <MdEmail />
           </a>
         </span>
@@ -143,7 +133,7 @@ const SocialIcons = () => {
         type="button"
         className={`resume-button${jump ? " resume-jump" : ""}`}
         data-cursor="disable"
-        aria-label="View résumé (private)"
+        aria-label="View résumé"
         onClick={() => window.dispatchEvent(new Event("open-resume"))}
       >
         <span

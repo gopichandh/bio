@@ -9,7 +9,7 @@
   <g fill="none" stroke="#134e4a" stroke-width="1" opacity="0.5">
     <path d="M0 150 H800 M0 300 H800 M0 450 H800 M200 0 V600 M400 0 V600 M600 0 V600"/>
   </g>
-  <text x="60" y="280" font-family="'JetBrains Mono',monospace" font-size="72" font-weight="800" fill="#22d3ee">vmbuzz</text>
+  <text x="60" y="280" font-family="'JetBrains Mono',monospace" font-size="72" font-weight="800" fill="#22d3ee">portfolio</text>
   <text x="62" y="340" font-family="'JetBrains Mono',monospace" font-size="30" fill="#94a3b8">Personal Tech Blog</text>
   <text x="60" y="520" font-family="'JetBrains Mono',monospace" font-size="22" fill="#4ade80">$ hugo serve --minify</text>
 </svg>

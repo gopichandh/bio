@@ -498,7 +498,7 @@ const Loading = () => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          VM
+          GM
         </a>
       </div>
       <div className={`loading-screen ${clicked ? "loading-warp" : ""}`}>

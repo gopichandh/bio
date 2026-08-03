@@ -5,7 +5,7 @@ import "./styles/ChessEasterEgg.css";
 /**
  * ChessEasterEgg
  *
- * Vilas loves chess — so there's a hidden chess board tucked into the site.
+ * Gopichandh loves chess — so there's a hidden chess board tucked into the site.
  * It can be revealed two ways:
  *   • type the word "chess" anywhere on the page, or
  *   • click the tiny knight glyph the RoamingBot hints about (dispatched via a
@@ -63,7 +63,7 @@ const ChessEasterEgg = () => {
       setBoard(clonePosition());
       setHighlight([]);
       setOpen(true);
-      unlockAchievement("chess", "You found Vilas's hidden chess board! ♞");
+      unlockAchievement("chess", "You found Gopichandh's hidden chess board! ♞");
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("open-chess", onOpen as EventListener);
@@ -135,7 +135,7 @@ const ChessEasterEgg = () => {
           <div className="chess-title">
             <span className="chess-knight">♞</span>
             <div>
-              <h3>Vilas ♥ Chess</h3>
+              <h3>Gopichandh ♥ Chess</h3>
               <p>
                 A quiet passion off the keyboard — here's a classic opening,
                 playing itself.

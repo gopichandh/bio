@@ -4,7 +4,7 @@ import "./styles/ScrollHuman.css";
 /**
  * ScrollHuman
  *
- * A tall, full-body character resembling Vilas (dark hair + beard, glasses,
+ * A tall, full-body character resembling Gopichandh (dark hair + beard, glasses,
  * teal hoodie) who WALKS DOWN the left margin of the page in lock-step with
  * the visitor's scroll — exactly like the reference portfolio where the 3D
  * person moves with the scroll.
@@ -24,7 +24,7 @@ import "./styles/ScrollHuman.css";
 type Mood = "wave" | "walk" | "point" | "mail" | "idle";
 
 const CAPTIONS: Record<Mood, string> = {
-  wave: "Hi! I'm Vilas — walk with me 👋",
+  wave: "Hi! I'm Gopichandh — walk with me 👋",
   idle: "Take your time… I'm right here.",
   walk: "Let's explore the page →",
   point: "Here's a bit of my work →",

@@ -77,7 +77,7 @@ const Navbar = () => {
             data-cursor="disable"
             onClick={scrollToTop}
           >
-            VM
+            GM
           </a>
           <ul>
             <li>
@@ -96,6 +96,11 @@ const Navbar = () => {
               </a>
             </li>
             <li>
+              <a data-href="#credentials" href="#credentials">
+                <HoverLinks text="CERTIFICATIONS" />
+              </a>
+            </li>
+            <li>
               <a data-href="#contact" href="#contact">
                 <HoverLinks text="CONTACT" />
               </a>
@@ -103,13 +108,13 @@ const Navbar = () => {
           </ul>
         </div>
         <a
-          href="https://www.linkedin.com/in/vilas-mankala/"
+          href="https://www.linkedin.com/in/gopi89/"
           className="navbar-connect"
           data-cursor="disable"
           target="_blank"
           rel="noreferrer"
         >
-          linkedin.com/in/vilas-mankala
+          linkedin.com/in/gopi89
         </a>
       </div>
 

@@ -4,13 +4,13 @@ import "./styles/Avatar.css";
 /**
  * Avatar
  *
- * A lively little developer character resembling Vilas (dark hair + beard,
+ * A lively little developer character resembling Gopichandh (dark hair + beard,
  * teal hoodie) seated at a glowing laptop. It lives on a fixed, compact stage
  * in the LOWER-LEFT corner — the opposite side from the RoamingBot — with
  * pointer-events:none so it never blocks any text or controls.
  *
  * As the visitor scrolls, the character performs an action relevant to the
- * section currently in view, and a small caption narrates what "Vilas" is
+ * section currently in view, and a small caption narrates what "Gopichandh" is
  * doing:
  *   • Landing  → waves hello
  *   • About    → sips coffee while you read his story
@@ -27,7 +27,7 @@ import "./styles/Avatar.css";
 type Action = "wave" | "coffee" | "type" | "present" | "mail";
 
 const CAPTIONS: Record<Action, string> = {
-  wave: "Hey! Welcome — I'm Vilas 👋",
+  wave: "Hey! Welcome — I'm Gopichandh 👋",
   coffee: "Reading along with you… ☕",
   type: "Writing reliable, self-healing systems ⌨️",
   present: "These are a few things I've built →",

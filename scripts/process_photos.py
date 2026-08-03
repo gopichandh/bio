@@ -51,12 +51,12 @@ def process(src, dst, max_dim=1400, feather=14, erode=5, pad=60):
 # About section. We generate both cutout filenames the app expects from it so
 # the background is fully removed and the edges feather into the page.
 process(
-    "public/images/vilas.jpg",
-    "public/images/vilas-cutout.png",
+    "public/images/gopichandh.jpg",
+    "public/images/gopichandh-cutout.png",
 )
 process(
-    "public/images/vilas.jpg",
-    "public/images/vilas1-cutout.png",
+    "public/images/gopichandh.jpg",
+    "public/images/gopichandh1-cutout.png",
     max_dim=1100,
 )
 print("done")

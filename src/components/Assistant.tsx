@@ -25,19 +25,19 @@ const TIPS: Tip[] = [
   {
     match: "landingDiv",
     title: "Hi, I'm Bit 👋",
-    text: "I'm Vilas's datacenter admin. I'll guide you around. Scroll down to meet him.",
+    text: "I'm Gopichandh's datacenter admin. I'll guide you around. Scroll down to meet him.",
     hint: "down",
   },
   {
     match: "about",
-    title: "About Vilas",
-    text: "13+ years keeping cloud platforms fast and always-on. Keep scrolling for his stack.",
+    title: "About Gopichandh",
+    text: "8 years keeping cloud platforms fast and always-on. Keep scrolling for his stack.",
     hint: "down",
   },
   {
     match: "techstack",
     title: "The Tech Stack",
-    text: "Every tool Vilas runs in production — cloud, containers, CI/CD and observability.",
+    text: "Every tool Gopichandh runs in production — cloud, containers, CI/CD and observability.",
     hint: "down",
   },
   {
@@ -61,7 +61,7 @@ const TIPS: Tip[] = [
   {
     match: "contact",
     title: "Let's Talk",
-    text: "Send Vilas a message here — or grab the RESUME button on the left to unlock it.",
+    text: "Send Gopichandh a message here — or grab the RESUME button on the left to unlock it.",
     hint: "here",
   },
 ];

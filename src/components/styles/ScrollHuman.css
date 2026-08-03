@@ -1,5 +1,5 @@
 /* ============================================================
-   ScrollHuman — a full-body "Vilas" who walks DOWN the page in
+   ScrollHuman — a full-body "Gopichandh" who walks DOWN the page in
    lock-step with the visitor's scroll. Fixed in the LEFT gutter,
    pointer-events:none so he NEVER blocks any text/control/image.
    ============================================================ */
@@ -80,7 +80,7 @@
 }
 
 /* ============================================================
-   PART PALETTE (matches the site's teal / Vilas likeness)
+   PART PALETTE (matches the site's teal / Gopichandh likeness)
    ============================================================ */
 .vmh-shadow {
   fill: rgba(0, 0, 0, 0.3);

@@ -1,4 +1,4 @@
-# Deploy & Domain Guide — Vilas Mankala Portfolio
+# Deploy & Domain Guide — Gopichandh Mallavarapu Portfolio
 
 This portfolio is a **Vite + React + TypeScript** app. Below are the exact steps to publish
 it **for free**, connect a **custom domain**, and pick the best **domain name**.
@@ -7,12 +7,10 @@ it **for free**, connect a **custom domain**, and pick the best **domain name**.
 
 ## ✅ Before you deploy
 
-1. Replace the placeholder résumé with your real PDF:
-   overwrite [`public/Vilas_Mankala_Resume.pdf`](public/Vilas_Mankala_Resume.pdf).
-2. (Optional) Update your real GitHub username in
+1. Replace the placeholder résumé with your real PDF in `public/`.
+2. (Optional) Update your real GitHub and LinkedIn links in
    [`src/components/Contact.tsx`](src/components/Contact.tsx) and
-   [`src/components/SocialIcons.tsx`](src/components/SocialIcons.tsx)
-   (currently `github.com/vilasmankala`).
+   [`src/components/SocialIcons.tsx`](src/components/SocialIcons.tsx).
 3. Verify the build passes:
    ```bash
    npm install
@@ -25,23 +23,23 @@ it **for free**, connect a **custom domain**, and pick the best **domain name**.
 
 ### A. Push to GitHub
 ```bash
-cd /Users/vilasmankala/Notes/github/3d-portfolio
+cd /path/to/your/repo
 git init
 git add .
-git commit -m "Vilas Mankala portfolio"
+git commit -m "Gopichandh Mallavarapu portfolio"
 
 # Create the repo (needs the GitHub CLI: brew install gh && gh auth login)
-gh repo create vilas-portfolio --public --source=. --remote=origin --push
+gh repo create gopichandh-portfolio --public --source=. --remote=origin --push
 
 # ...or manually create an empty repo on github.com then:
-# git remote add origin https://github.com/<you>/vilas-portfolio.git
+# git remote add origin https://github.com/<you>/gopichandh-portfolio.git
 # git branch -M main
 # git push -u origin main
 ```
 
 ### B. Deploy
 Easiest (dashboard): go to https://vercel.com → **Add New… → Project** →
-import `vilas-portfolio`. Vercel auto-detects Vite. Build command `npm run build`,
+import `gopichandh-portfolio`. Vercel auto-detects Vite. Build command `npm run build`,
 output dir `dist`. Click **Deploy**.
 
 Or via CLI:
@@ -50,7 +48,7 @@ npm i -g vercel
 vercel          # first run: link/create project (accept defaults)
 vercel --prod   # production deploy
 ```
-You'll get a free URL like `https://vilas-portfolio.vercel.app` with automatic HTTPS.
+You'll get a free URL like `https://gopichandh-portfolio.vercel.app` with automatic HTTPS.
 Every future `git push` to `main` auto-redeploys.
 
 ---
@@ -67,7 +65,7 @@ Or drag the `dist/` folder onto https://app.netlify.com/drop.
 - **Cloudflare Pages**: connect the GitHub repo, framework preset "Vite",
   build `npm run build`, output `dist`.
 - **GitHub Pages**: `npm i -D gh-pages`, add `"deploy": "gh-pages -d dist"` to
-  scripts, set `base: '/vilas-portfolio/'` in [`vite.config.ts`](vite.config.ts),
+  scripts, set `base: '/gopichandh-portfolio/'` in [`vite.config.ts`](vite.config.ts),
   then `npm run build && npm run deploy`.
 
 ---
@@ -86,9 +84,9 @@ Or drag the `dist/` folder onto https://app.netlify.com/drop.
 - **GitHub Student Developer Pack** → free `.me` (Namecheap) and free `.tech` domain for 1 year.
 
 ### Connect the domain to Vercel
-1. Vercel → your project → **Settings → Domains → Add** → enter `vilasmankala.dev`.
+1. Vercel → your project → **Settings → Domains → Add** → enter your custom domain (for example `gopichandh.dev`).
 2. At your registrar's DNS, add the records Vercel shows, typically:
-   - Apex `vilasmankala.dev` → **A** record `76.76.21.21`
+   - Apex `gopichandh.dev` → **A** record `76.76.21.21`
    - `www` → **CNAME** `cname.vercel-dns.com`
    - (Or just switch nameservers to Vercel/Cloudflare for auto-config.)
 3. Wait for DNS to propagate; Vercel provisions **free SSL** automatically.
@@ -100,17 +98,16 @@ Or drag the `dist/` folder onto https://app.netlify.com/drop.
 ## 💡 Domain name suggestions
 
 **Technical / professional (top picks ⭐):**
-- `vilasmankala.dev` ⭐ — clean personal brand, `.dev` forces HTTPS, developer-signaling
-- `vilasmankala.cloud` ⭐ — perfectly on-brand for a Cloud/SRE architect
+- `gopichandh.dev` ⭐ — clean personal brand, `.dev` forces HTTPS, developer-signaling
+- `gopichandh.cloud` ⭐ — perfectly on-brand for a Cloud/SRE engineer
 - `mankala.io`
-- `vilasops.dev` / `vilasops.io`
-- `sre.vilasmankala.com` (subdomain option if you buy the .com)
+- `gopichandh.io`
+- `sre.gopichandh.dev` (subdomain option if you buy the `.dev`)
 
 **Viral / catchy / brandable:**
 - `99point9.dev` ⭐ — nod to the "nines" of reliability / SLAs
 - `zerodowntime.dev`
 - `keepitreliable.dev`
-- `vmbuzz.dev` — extends your existing `vmbuzz.com` brand
-- `alwaysonvilas.dev`
+- `alwaysongopi.dev`
 
-**Top 3 overall:** `vilasmankala.dev` · `vilasmankala.cloud` · `99point9.dev`
+**Top 3 overall:** `gopichandh.dev` · `gopichandh.cloud` · `99point9.dev`

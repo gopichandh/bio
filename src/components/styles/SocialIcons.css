@@ -223,7 +223,7 @@
   top: 655px;
   left: 0;
   height: 1px;
-  background-color: #ffffff;
+  background: rgba(96, 165, 250, 0.18);
   width: 100%;
   z-index: 99999;
 }

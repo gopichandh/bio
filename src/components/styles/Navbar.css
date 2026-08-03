@@ -4,7 +4,7 @@
   width: var(--cWidth);
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0px;
+  padding: 16px 0px;
   margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
@@ -12,8 +12,9 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 9999;
-  /* Let clicks pass through the empty bar area to overlays beneath (e.g. the
-     live-status HUD in the top-right); only actual links stay interactive. */
+  background: rgba(8, 8, 12, 0.92);
+  border-bottom: 1px solid rgba(214, 162, 81, 0.12);
+  backdrop-filter: blur(20px);
   pointer-events: none;
 }
 .header a,
@@ -39,14 +40,19 @@
   align-items: center;
 }
 .nav-home {
-  color: var(--accentColor, #5eead4);
+  color: var(--accentColor);
 }
 .header ul li {
   margin-left: 0px;
   letter-spacing: 1px;
-  color: #ccc;
+  color: #e7e2d8;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.header ul li:hover {
+  color: rgba(214, 162, 81, 0.95);
+  transform: translateY(-1px);
 }
 .navbar-connect {
   position: absolute;

@@ -5,7 +5,7 @@ import "./styles/PingButton.css";
 
 type Line = { id: number; text: string; kind: "cmd" | "out" | "stat" | "ok" };
 
-const HOST = "vilasmankala.com";
+const HOST = "gopichandh.dev";
 const IP = "104.21.48.207";
 
 const PingButton = () => {

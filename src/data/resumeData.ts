@@ -1,5 +1,5 @@
 /**
- * resumeData.ts — SINGLE SOURCE OF TRUTH for Vilas Mankala's résumé content.
+ * resumeData.ts — SINGLE SOURCE OF TRUTH for Gopichandh Mallavarapu's résumé content.
  *
  * ▸ Edit THIS file (and only this file) whenever the résumé changes — e.g. a
  *   new role, an updated bullet, extra skills, a fresh certification, etc.
@@ -52,120 +52,134 @@ export type ResumeData = {
 };
 
 const resumeData: ResumeData = {
-  name: "Vilas Mankala",
-  title: "Senior Site Reliability Architect",
-  location: "Texas, USA",
-  links: "linkedin.com/in/vilas-mankala · github.com/vilasmankala",
-  privatePhone: "📞 +1 (000) 000-0000",
-  privateEmail: "✉ private@email.com",
-  privacyNote: "Contact details hidden for privacy — reach out via LinkedIn.",
+  name: "GOPICHANDH MALLAVARAPU",
+  title: "Sr. Site Reliability / DevOps Engineer",
+  location: "Liberty Hill, TX",
+  links: "linkedin.com/in/gopi89 · github.com/gopichandh",
+  privatePhone: "📞 +1 (504) 577-3331",
+  privateEmail: "✉ mallavarapu.gopichandh@gmail.com",
+  privacyNote: "Contact details shared on request.",
 
   summary:
-    "Site Reliability Engineer with 13+ years in infrastructure management, " +
-    "focused on reliability, scalability, and performance. Skilled in cloud " +
-    "platforms, automating operations, and meeting SLAs/SLOs — with strong " +
-    "incident management and a proactive, collaborative approach. Delivered " +
-    "CI/CD pipelines, Kubernetes platforms, and observability stacks for " +
-    "Apple, Nike, Kohls, and UnitedHealthcare.",
+    "Results-driven Senior Site Reliability / DevOps Engineer with 8 years of experience designing, automating, and operating enterprise-scale platforms across financial services, telecom, and Big Tech. Currently at Apple, leading Kubernetes platform migrations and observability engineering at scale. Triple Kubernetes certified (CKA, CKAD, CKS) and Red Hat OpenShift Specialist with deep multi-cloud expertise across AWS, GCP, and Azure. Proven ability to drive zero-downtime migrations, build GitOps-driven CI/CD pipelines, implement HashiCorp Vault security frameworks, and architect Data Lake solutions using Snowflake and AWS. Known for reducing MTTD through SLI/SLO-based observability, owning 24×7 on-call operations, and delivering platform reliability at Apple-grade scale.",
 
   experience: [
     {
-      role: "Senior Site Reliability Architect",
-      company: "Diamondpick Inc. (DBA Galent) · Texas, USA · Project: Apple",
-      period: "Feb 2025 – Present",
+      role: "Sr. Site Reliability Engineer",
+      company: "Apple · Austin, TX",
+      period: "Sep 2025 – Present",
       points: [
-        "Built AlertHub — an all-in-one monitoring platform unifying cluster topology visualization, an AI-powered chatbot, and alert/incident correlation.",
-        "Migrated Kubernetes from a Rancher-managed setup to a Kubeadm-based architecture powering developer preview environments via Ingress-managed URLs.",
-        "Engineered Jenkins CI/CD pipelines with Helm-based deployments and GitOps workflows across Jenkins + GitHub.",
+        "Led end-to-end Kubernetes workload migration from Rancher to Varanet by refactoring Helm charts, ingress configs, storage classes, and RBAC policies to Apple's platform standards; achieved zero production disruption across all environments.",
+        "Engineered comprehensive Dynatrace observability including custom dashboards, SLI/SLO alerting, and analytics reports; reduced MTTD by standardizing metrics pipelines and distributed trace collection across all engineering teams.",
+        "Designed Grafana and Splunk dashboards for real-time visibility into Kubernetes cluster health, workload performance, and operational KPIs across multi-tenant production clusters at Apple scale.",
+        "Enforced Pod Security Standards (PSS) and workload hardening across multi-tenant clusters; automated RBAC provisioning and Snowflake warehouse management, cutting compute costs and manual toil significantly.",
+        "Provided L3 on-call support for large-scale microservices; leveraged logs, metrics, and traces to resolve P1/P2 incidents; optimized HPA strategies and resource right-sizing to improve resilience and reduce operational overhead.",
+        "Supported CloudStack VM orchestration and network provisioning; ensured secure workload onboarding using Shield and Pomelo for secret management, compliance checks, and audit governance.",
+        "Integrated Kafka event-driven pipelines and Snowflake data workflows with Kubernetes workloads; contributed to DataLake and PowerBI reporting infrastructure for real-time operational analytics.",
       ],
     },
     {
-      role: "Senior Technical Consultant (DevOps)",
-      company: "GSPANN Technologies · Oregon, USA · Project: Nike",
-      period: "Jan 2024 – Jan 2025",
+      role: "Lead Site Reliability / DevOps Engineer",
+      company: "Fannie Mae · Reston, VA",
+      period: "Feb 2023 – Aug 2025",
       points: [
-        "Provisioned and automated an EKS cluster using Ansible + CloudFormation integrated with Jenkins pipelines.",
-        "Implemented detailed tagging and reporting that surfaced 15% in AWS cost savings.",
-        "Led the Build Automation team to cut CI/CD execution time by 60% through parallelization, intelligent job caching, and artifact reuse.",
+        "Provisioned and managed GKE clusters with autoscaling node pools, workload identity, and VPC-native networking; architected multi-tenant SaaS platforms with namespace isolation, resource quotas, and cost governance.",
+        "Architected CI/CD pipelines with blue-green and canary strategies and OAuth/OIDC authentication; integrated GKE with Cloud SQL, BigQuery, and GCS for data-driven SaaS applications achieving 99.9%+ uptime SLAs.",
+        "Built enterprise-scale Data Lake on AWS using S3, Glue, Athena, and Snowflake; implemented automated ETL/ELT pipelines with Snowpipe and CDC via AWS DMS for real-time structured and semi-structured data ingestion.",
+        "Deployed HashiCorp Vault for dynamic secrets, PKI management, and key rotation across CI/CD and container platforms; administered JFrog Artifactory and Xray for Docker image lifecycle and vulnerability governance.",
+        "Implemented secure data ingestion pipelines with IAM, KMS encryption, and fine-grained Snowflake access control; optimized large-scale Snowflake workloads using clustering keys and cost monitoring strategies.",
       ],
     },
     {
-      role: "Senior Technical Lead (DevOps)",
-      company: "WHISK Software · Hyderabad, India · Project: Apple",
-      period: "Apr 2021 – Dec 2023",
+      role: "Site Reliability / DevOps Engineer",
+      company: "Verizon · Dallas, TX",
+      period: "Jan 2021 – Feb 2023",
       points: [
-        "Automated GitHub user management with a Python Flask API, reducing manual effort by 40% and saving 5 hours weekly.",
-        "Designed monitoring for Kubernetes clusters with Prometheus and ArgoCD, boosting visibility by 20%.",
-        "Reduced downtime by 15% and cut incident resolution time by 25% through proactive observability.",
+        "Built GitHub Actions CI/CD pipelines for Kubernetes-hosted applications; containerized legacy monolithic workloads using Docker and Kubernetes, reducing deployment time by 40% and improving cross-environment consistency.",
+        "Automated Dynatrace OneAgent Operator deployment on Kubernetes/OpenShift clusters via ArgoCD GitOps methodology, enabling consistent and repeatable observability rollouts with automated rollback across all environments.",
+        "Implemented production-grade, HA, fault-tolerant auto-scaling Kubernetes infrastructure with advanced HPA and cluster autoscaler configurations; supported enterprise-scale microservice container orchestration.",
+        "Deployed and managed CloudBees Jenkins, SonarQube, and Nexus; integrated SonarQube into CI pipelines for code quality gates, coverage enforcement, and security scanning as part of a DevSecOps governance framework.",
+        "Established enterprise-wide Git branching strategies, tagging standards, and governance policies across GitHub and GitLab; enforced Configuration-as-Code using Chef and Docker for consistent environment management across all teams.",
+        "Designed and implemented Prometheus and Grafana monitoring stacks; created alerting runbooks and on-call escalation procedures that reduced mean time to resolution (MTTR) for production incidents by 35%.",
       ],
     },
     {
-      role: "Senior System Engineer",
-      company: "EPAM Systems · Hyderabad, India · Project: UnitedHealthcare",
-      period: "Jan 2021 – Mar 2021",
+      role: "Infrastructure Engineer",
+      company: "Discover Financial Services · Riverwood, IL",
+      period: "Sep 2018 – Jan 2021",
       points: [
-        "Streamlined CI/CD workflows with Jenkins and AWS, improving cross-team collaboration.",
-        "Ensured 99% SLA adherence and reduced downtime by 15% through prompt pipeline issue resolution.",
-      ],
-    },
-    {
-      role: "Technical Lead (DevOps)",
-      company: "WHISK Software · Hyderabad, India · Project: Kohls",
-      period: "Jul 2018 – Dec 2020",
-      points: [
-        "Implemented the ELK stack, reducing downtime by 10%.",
-        "Built an EKS Health Monitoring Dashboard (Bash, Perl, HTML, CGI) that cut incident response times by 25%.",
-        "Automated infrastructure tasks with Bash, reducing manual errors by 40% and improving uptime by 20%.",
-      ],
-    },
-    {
-      role: "DevOps Engineer",
-      company: "Cambridge Technology Enterprises · Hyderabad, India",
-      period: "Jun 2016 – Jun 2018",
-      points: [
-        "Managed 5 AWS accounts hosting banking websites with a 3-tier architecture.",
-        "Automated end-to-end deployments using Jenkins and Ansible, cutting deploy time by 50%.",
-        "Streamlined Bitbucket → AWS EFS delivery and implemented centralized CloudWatch cross-account dashboards.",
-      ],
-    },
-    {
-      role: "Senior CloudOps Engineer",
-      company: "INDMAX IT Services · Hyderabad, India · Project: Flurry",
-      period: "Aug 2013 – May 2016",
-      points: [
-        "Enhanced AWS CloudWatch monitoring to cut resource costs by 25%.",
-        "Automated tasks with Bash, saving 5 hours weekly.",
-        "Optimized infrastructure with AWS Auto Scaling and ELB, improving performance by 25% under fluctuating demand.",
+        "Developed Golang microservices using goroutines and channels for high-throughput concurrent data collection and processing; maintained >85% Go test coverage across all microservices.",
+        "Operated OpenShift platform by managing Docker containers and Kubernetes clusters; administered projects, services, routes, BuildConfigs, ImageStreams, and templates across development and production environments.",
+        "Authored Ansible playbooks for fully automated provisioning and configuration of RHEL servers across test and production environments, eliminating manual configuration drift and reducing server provisioning time by 60%.",
+        "Automated code builds and deployments via Jenkins, Git, Docker, Ansible, and CloudFormation; integrated HashiCorp Vault for dynamic secret management and JFrog Artifactory for artifact versioning and governance.",
+        "Implemented load-balanced OpenShift routes and Kubernetes services for external traffic management; troubleshot pods via SSH and logs, resolving platform-level issues that improved overall service uptime.",
+        "Contributed to platform infrastructure automation including log aggregation pipelines using ELK and Splunk; set up Prometheus alerting and Grafana dashboards for infrastructure health monitoring and capacity planning.",
       ],
     },
   ],
 
   skills: [
-    { group: "Cloud", items: "AWS (EKS, EC2, S3, CloudWatch, CloudFormation), Auto Scaling, ELB" },
-    { group: "Containers", items: "Kubernetes, Kubeadm, Docker, Helm, ArgoCD, Rancher" },
-    { group: "CI/CD & GitOps", items: "Jenkins, GitHub Actions, GitOps, Bitbucket" },
-    { group: "IaC & Automation", items: "Terraform, Ansible, CloudFormation, Python, Bash, Perl" },
-    { group: "Observability", items: "Prometheus, Grafana, ELK, Datadog, Splunk, CloudWatch" },
-    { group: "Practices", items: "SRE, SLAs/SLOs, Incident Management, Cost Optimization" },
+    {
+      group: "Container & Orchestration",
+      items: "Kubernetes (GKE, EKS, AKS), OpenShift (OCP), Rancher, Docker, Helm, Kustomize, ArgoCD, Kueue, PSS",
+    },
+    {
+      group: "Cloud Platforms",
+      items: "AWS (Lambda, EKS, S3, CloudWatch, IAM, DMS, Glue, Athena), GCP (GKE, BigQuery, Cloud IAM, GCS), Azure",
+    },
+    {
+      group: "CI/CD & GitOps",
+      items: "GitHub Actions, Jenkins (CloudBees), GitLab CI, ArgoCD, Serverless Framework, Blue-Green/Canary",
+    },
+    {
+      group: "IaC & Config Mgmt",
+      items: "Terraform (multi-cloud), Ansible, Chef, CloudFormation, Helm, Kustomize",
+    },
+    {
+      group: "Security & Secrets",
+      items: "HashiCorp Vault (PKI, dynamic secrets), Twistlock, Sysdig, RBAC, OIDC/OAuth, Pod Security Admission",
+    },
+    {
+      group: "Observability",
+      items: "Dynatrace (SLI/SLO), Grafana, Prometheus, Splunk, Datadog, New Relic, Instana, AppDynamics, Moogsoft",
+    },
+    {
+      group: "Data & Storage",
+      items: "Snowflake, Apache Kafka, PostgreSQL, DynamoDB, Redis, AWS Glue/Athena, Snowpipe, CDC (AWS DMS)",
+    },
+    {
+      group: "Artifact & Build",
+      items: "JFrog Artifactory, Nexus, Xray, Maven, Gradle, SonarQube",
+    },
+    {
+      group: "Languages",
+      items: "Go (Golang), Python, Bash/Shell, Scala, Spring Boot, Node.js",
+    },
+    {
+      group: "Collaboration",
+      items: "ServiceNow, Jira, Confluence, GitHub Enterprise, PagerDuty, RCA Frameworks",
+    },
   ],
 
   certifications: [
-    "AWS Certified Solutions Architect – Associate",
-    "Certified Kubernetes Administrator (CKA)",
-    "Google Professional Cloud Architect",
-    "Oracle Solaris 10 System Administrator I & II",
+    "Certified Kubernetes Administrator (CKA) — CKA-1900-003685-0100",
+    "Certified Kubernetes Application Developer (CKAD) — LF-imw4atln5q",
+    "Certified Kubernetes Security Specialist (CKS)",
+    "Red Hat OpenShift Specialist — 200-186-401",
+    "AWS Developer — RYMGSZH1L2E4QFKD",
+    "CloudBees Jenkins — 2020",
   ],
 
   education: [
     {
-      degree: "B.Tech, Computer Science & Engineering",
-      school: "St. Martin's Engineering College (Affiliated with JNTU)",
-      period: "Aug 2008 – Apr 2012 · Hyderabad, India",
+      degree: "M.S. Computer Information Systems",
+      school: "Southern University at New Orleans, LA",
+      period: "2016 – 2018",
     },
     {
-      degree: "Higher Secondary Certificate (HSC) — MPC",
-      school: "Aurora Junior College",
-      period: "Jun 2006 – Mar 2008 · Jagtial, India",
+      degree: "B.S. Computer Science",
+      school: "KL University, Vijayawada, AP",
+      period: "2011 – 2015",
     },
   ],
 };

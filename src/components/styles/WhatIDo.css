@@ -60,15 +60,15 @@
 .what-panel {
   position: relative;
   padding: 34px 34px 30px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.22);
   border-radius: 16px;
   background: linear-gradient(
     160deg,
-    rgba(94, 234, 212, 0.06),
-    rgba(255, 255, 255, 0.02)
+    rgba(10, 18, 38, 0.94),
+    rgba(10, 18, 38, 0.88)
   );
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: 0.3s;
 }
 

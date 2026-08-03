@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLoading } from "../context/LoadingProvider";
 import { setProgress } from "./Loading";
+import portrait from "../assets/portrait.jpg";
 import "./styles/PhotoHero.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
  * PhotoHero replaces the original WebGL 3D character.
  *
  * Benefits:
- *  - Renders the real portrait of Vilas (background removed) instead of a
+ *  - Renders the real portrait of Gopichandh (background removed) instead of a
  *    generic 3D avatar.
  *  - Removes the entire three.js / WebCrypto / HDR pipeline, which is what
  *    failed to display in Safari, so the hero now works in every browser.
@@ -214,16 +215,16 @@ const PhotoHero = () => {
             <img
               ref={imgRef}
               className="photo-hero-img"
-              src="/images/vilas-cutout.png"
-              alt="Vilas Mankala — Senior Site Reliability Architect"
+              src={portrait}
+              alt="Gopichandh Mallavarapu — Sr. Site Reliability / DevOps Engineer"
               draggable={false}
             />
             <div className="photo-chip">
               <span className="photo-chip-dot" />
               <span className="photo-chip-text">
-                <span className="photo-chip-name">Vilas Mankala</span>
+                <span className="photo-chip-name">Gopichandh Mallavarapu</span>
                 <span className="photo-chip-role">
-                  Site Reliability Architect · Online
+                  Sr. Site Reliability / DevOps Engineer · Online
                 </span>
               </span>
             </div>

@@ -13,11 +13,11 @@ import "./styles/BootTerminal.css";
 type Line = { text: string; cls?: string; pause?: number };
 
 const SEQUENCE: Line[] = [
-  { text: "$ ssh vilas@portfolio.sre", cls: "cmd" },
+  { text: "$ ssh gopichandh@portfolio.local", cls: "cmd" },
   { text: "Authenticating… key accepted ✔", cls: "ok", pause: 250 },
   { text: "$ kubectl config use-context production", cls: "cmd" },
   { text: 'Switched to context "production".', cls: "dim", pause: 200 },
-  { text: "$ kubectl get pods -n vilas-portfolio", cls: "cmd" },
+  { text: "$ kubectl get pods -n gopichandh-site", cls: "cmd" },
   { text: "NAME                       READY   STATUS    RESTARTS", cls: "head" },
   { text: "hero-landing-7c9d          1/1     Running   0", cls: "pod" },
   { text: "about-me-5f4b              1/1     Running   0", cls: "pod" },
@@ -102,7 +102,7 @@ const BootTerminal = () => {
           <span className="boot-dot boot-red" />
           <span className="boot-dot boot-amber" />
           <span className="boot-dot boot-green" />
-          <span className="boot-title">vilas@portfolio: ~</span>
+          <span className="boot-title">gopichandh@portfolio.local: ~</span>
           <button className="boot-skip" onClick={skip} data-cursor="disable">
             skip ›
           </button>

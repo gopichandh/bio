@@ -110,15 +110,8 @@ const Resume = () => {
               {resumeData.location} · {resumeData.links}
             </p>
             <p className="resume-contact">
-              <span className="resume-private" title="Private — shared on request">
-                {resumeData.privatePhone}
-              </span>
-              <span className="resume-private" title="Private — shared on request">
-                {resumeData.privateEmail}
-              </span>
-              <span className="resume-private-note">
-                {resumeData.privacyNote}
-              </span>
+              <span>{resumeData.privatePhone}</span>
+              <span>{resumeData.privateEmail}</span>
             </p>
           </header>
 

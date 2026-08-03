@@ -16,14 +16,11 @@ import DataCenterBG from "./DataCenterBG";
 import ServerRoom from "./ServerRoom";
 
 // Batch 4 — interactive SRE features
-import Achievements from "./Achievements";
 import CableTrail from "./CableTrail";
 import KonamiEasterEgg from "./KonamiEasterEgg";
 import ChessEasterEgg from "./ChessEasterEgg";
 
 // Batch 5 — futuristic interactive layer
-import RoamingBot from "./RoamingBot";
-import Football from "./Football";
 import LiveStatus from "./LiveStatus";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
@@ -54,13 +51,8 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <LiveStatus />
 
       {/* Global overlays / listeners */}
-      <Achievements />
       <KonamiEasterEgg />
       <ChessEasterEgg />
-
-      {/* Futuristic interactive layer — roams the whole page */}
-      <Football />
-      <RoamingBot />
 
       {isDesktopView && children}
       <div id="smooth-wrapper">

@@ -184,7 +184,7 @@ const DataCenterGame = () => {
             </div>
             <h3>You are the best!</h3>
             <p>
-              Zero meltdowns, MTTR of basically nothing. Vilas could use an SRE
+              Zero meltdowns, MTTR of basically nothing. Gopichandh could use an SRE
               like you on-call. 🏅
             </p>
             <button className="dcg-btn" onClick={start} data-cursor="disable">

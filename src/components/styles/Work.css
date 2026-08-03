@@ -2,7 +2,7 @@
 .work-section {
   position: relative;
   z-index: 1;
-  background-color: var(--backgroundColor);
+  background: linear-gradient(180deg, rgba(4, 12, 24, 0.95), rgba(8, 20, 40, 0.96));
   padding: 80px 0;
 }
 
@@ -11,6 +11,7 @@
   font-weight: 500;
   margin-top: 0;
   margin-bottom: 50px;
+  color: #f8fafc;
 }
 
 .work-section h2>span {

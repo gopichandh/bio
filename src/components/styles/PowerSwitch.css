@@ -96,20 +96,20 @@
    Curated override of the core CSS variables + a few surfaces.
    ============================================================ */
 :root.theme-light {
-  --backgroundColor: #eef2f7;
-  --accentColor: #0d9488;
-  color: #0f172a;
-  color-scheme: light;
+  --backgroundColor: #071623;
+  --accentColor: #60a5fa;
+  color: #e2e8f0;
+  color-scheme: dark;
 }
 
 :root.theme-light body {
-  background-color: #e6ebf2;
-  color: #0f172a;
+  background-color: #071623;
+  color: #e2e8f0;
 }
 
 :root.theme-light .container-main,
 :root.theme-light #smooth-content {
-  color: #0f172a;
+  color: #e2e8f0;
 }
 
 :root.theme-light h1,
