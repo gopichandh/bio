@@ -14,7 +14,7 @@
   height: 100vh;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(255,255,255,0.62), rgba(232,243,248,0.92));
+  background: linear-gradient(135deg, rgba(5, 6, 10, 0.96), rgba(9, 10, 14, 0.98));
 }
 
 /* The photographed server hall. Uniformly dimmed with a flat dark wash so it
@@ -28,16 +28,16 @@
   background-image:
     linear-gradient(
       to bottom,
-      rgba(248, 251, 255, 0.2) 0%,
-      rgba(238, 244, 248, 0.7) 50%,
-      rgba(248, 251, 255, 0.8) 100%
+      rgba(5, 6, 9, 0.88) 0%,
+      rgba(8, 9, 14, 0.88) 50%,
+      rgba(6, 7, 10, 0.9) 100%
     ),
     url("/images/datacenter.jpeg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  filter: saturate(0.92) brightness(1.04) blur(0.2px);
-  opacity: 0.34;
+  filter: saturate(0.72) brightness(0.45) blur(0.2px);
+  opacity: 0.58;
 }
 
 .datacenter-canvas {
