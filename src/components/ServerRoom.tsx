@@ -6,6 +6,10 @@ const HIGHLIGHTS = [
     text: "Designing resilient Kubernetes and cloud platforms with clear SLO-focused operational standards.",
   },
   {
+    title: "OpenShift Container Platform",
+    text: "Building and operating Red Hat OpenShift Container Platform (OCP) clusters for secure, scalable enterprise workloads.",
+  },
+  {
     title: "Automation First",
     text: "Reducing manual effort using Infrastructure as Code, GitOps workflows, and repeatable CI/CD release pipelines.",
   },

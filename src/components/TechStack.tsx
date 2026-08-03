@@ -21,7 +21,7 @@ const groups: SkillGroup[] = [
     title: "Containers & Orchestration",
     skills: [
       "Kubernetes",
-      "OpenShift",
+      "OpenShift Container Platform (OCP)",
       "Docker",
       "Helm",
       "Kustomize",
