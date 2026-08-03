@@ -50,29 +50,27 @@
 }
 
 /* The portrait card — a polished glass "frame" around the cutout portrait:
-   a soft dark gradient panel, a teal-accent border, a layered drop shadow and
-   a subtle inner glow, giving the first image an intentional, framed look. */
+   a soft dark gradient panel, a warm accent border, a cleaner shadow and
+   a subtle glow for a leaner landing hero. */
 .photo-card {
   position: relative;
   z-index: 2;
   width: 100%;
   aspect-ratio: 4 / 5;
-  border-radius: 22px;
+  border-radius: 20px;
   overflow: visible;
   background: linear-gradient(
     165deg,
-    rgba(16, 30, 38, 0.55) 0%,
-    rgba(8, 18, 26, 0.42) 55%,
-    rgba(6, 14, 20, 0.6) 100%
+    rgba(12, 14, 18, 0.95) 0%,
+    rgba(10, 12, 16, 0.95) 55%,
+    rgba(8, 10, 14, 0.98) 100%
   );
-  border: 1px solid rgba(94, 234, 212, 0.35);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(94, 234, 212, 0.08) inset,
-    0 0 34px rgba(94, 234, 212, 0.16);
+  border: 1px solid rgba(214, 162, 81, 0.18);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(214, 162, 81, 0.05) inset;
   backdrop-filter: blur(6px);
   animation: photoFloat 6s ease-in-out infinite;
   will-change: transform;
-  /* Re-enable hover so the recruiter greeting can appear */
   pointer-events: auto;
 }
 
@@ -81,9 +79,9 @@
 .photo-card::after {
   content: "";
   position: absolute;
-  width: 26px;
-  height: 26px;
-  border: 2px solid rgba(94, 234, 212, 0.6);
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(214, 162, 81, 0.58);
   z-index: 5;
   pointer-events: none;
 }
@@ -92,14 +90,14 @@
   left: 10px;
   border-right: none;
   border-bottom: none;
-  border-top-left-radius: 12px;
+  border-top-left-radius: 10px;
 }
 .photo-card::after {
   bottom: 10px;
   right: 10px;
   border-left: none;
   border-top: none;
-  border-bottom-right-radius: 12px;
+  border-bottom-right-radius: 10px;
 }
 
 .photo-hero-img {

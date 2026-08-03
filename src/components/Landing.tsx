@@ -22,37 +22,6 @@ const Landing = ({ children }: PropsWithChildren) => {
   return (
     <div className="landing-section" id="landingDiv">
       <div className="landing-panel">
-        <div className="landing-pipeline" aria-label="CI/CD pipeline stages">
-          <button type="button" className="stage-pill stage-pill-active">
-            <span className="stage-icon">🧱</span>
-            <div>
-              <strong>Build</strong>
-              <span>Compile & package</span>
-            </div>
-          </button>
-          <button type="button" className="stage-pill">
-            <span className="stage-icon">🧪</span>
-            <div>
-              <strong>Test</strong>
-              <span>Automated quality gates</span>
-            </div>
-          </button>
-          <button type="button" className="stage-pill">
-            <span className="stage-icon">🚀</span>
-            <div>
-              <strong>Deploy</strong>
-              <span>GitOps rollout</span>
-            </div>
-          </button>
-          <button type="button" className="stage-pill">
-            <span className="stage-icon">🟢</span>
-            <div>
-              <strong>Live</strong>
-              <span>In production</span>
-            </div>
-          </button>
-        </div>
-
         <div className="landing-grid">
           <section className="landing-copy">
             <p className="landing-eyebrow">Approaching the data center</p>
