@@ -19,12 +19,12 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  --accentColor: #d6a251;
-  --accentSoft: rgba(214, 162, 81, 0.14);
-  --backgroundColor: #090b12;
-  --surfaceColor: #111520;
-  --mutedColor: #9b8d80;
-  --borderColor: rgba(214, 162, 81, 0.16);
+  --accentColor: #ee0000;
+  --accentSoft: rgba(238, 0, 0, 0.16);
+  --backgroundColor: #0b0607;
+  --surfaceColor: #181013;
+  --mutedColor: #b39aa0;
+  --borderColor: rgba(238, 0, 0, 0.2);
   --displayFont: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   --vh: 100vh;
@@ -75,8 +75,8 @@ body {
   margin: 0;
   height: auto;
   background:
-    radial-gradient(circle at top left, rgba(214, 162, 81, 0.08), transparent 30%),
-    linear-gradient(180deg, #05060a 0%, #080a10 54%, #090b12 100%);
+    radial-gradient(circle at top left, rgba(238, 0, 0, 0.12), transparent 34%),
+    linear-gradient(180deg, #070304 0%, #0a0507 54%, #100709 100%);
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1440px;

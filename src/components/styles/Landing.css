@@ -492,15 +492,15 @@
 }
 
 .landing-btn-primary {
-  background: linear-gradient(135deg, var(--accentColor), #67e8f9);
+  background: linear-gradient(135deg, var(--accentColor), #a30000);
   color: #07212a;
-  box-shadow: 0 12px 30px rgba(40, 184, 199, 0.18);
+  box-shadow: 0 12px 30px rgba(238, 0, 0, 0.24);
 }
 
 .landing-btn-primary:hover {
   transform: translateY(-3px);
   color: #07212a;
-  box-shadow: 0 14px 36px rgba(40, 184, 199, 0.25);
+  box-shadow: 0 14px 36px rgba(238, 0, 0, 0.32);
 }
 
 .landing-btn-ghost {

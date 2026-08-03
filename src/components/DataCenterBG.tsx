@@ -142,13 +142,13 @@ const DataCenterBG = () => {
               ctx.fillStyle = `rgba(255,140,90,${0.5 + Math.random() * 0.3})`;
               ctx.shadowColor = "rgba(255,90,60,0.6)";
             } else {
-              ctx.fillStyle = "rgba(180,255,240,0.55)";
-              ctx.shadowColor = "rgba(94,234,212,0.5)";
+              ctx.fillStyle = "rgba(255,180,180,0.55)";
+              ctx.shadowColor = "rgba(238,0,0,0.55)";
             }
             ctx.shadowBlur = 6;
           } else {
             // DIM trail — very low alpha so it never overshadows content
-            const base = failing ? "255,150,110" : "94,234,212";
+            const base = failing ? "255,150,110" : "238,0,0";
             const a = (failing ? 0.16 : 0.14) * falloff * (failing ? (0.6 + Math.random() * 0.4) : 1);
             ctx.fillStyle = `rgba(${base},${a})`;
             ctx.shadowBlur = 0;
@@ -242,19 +242,19 @@ const DataCenterBG = () => {
       const panelH = 70;
       ctx.save();
       roundRectPath(panelX, panelTop, panelW, panelH, 16);
-      ctx.fillStyle = "rgba(6, 12, 20, 0.88)";
+      ctx.fillStyle = "rgba(18, 6, 8, 0.9)";
       ctx.shadowColor = "rgba(0,0,0,0.55)";
       ctx.shadowBlur = 26;
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.lineWidth = 1.4;
-      ctx.strokeStyle = "rgba(94, 234, 212, 0.45)";
+      ctx.strokeStyle = "rgba(238, 0, 0, 0.5)";
       ctx.stroke();
       ctx.restore();
 
       // connecting rail
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(94, 234, 212, 0.18)";
+      ctx.strokeStyle = "rgba(238, 0, 0, 0.2)";
       ctx.beginPath();
       ctx.moveTo(nodeX(0), railY);
       ctx.lineTo(nodeX(STAGES.length - 1), railY);
@@ -262,7 +262,7 @@ const DataCenterBG = () => {
 
       // completed portion of the rail glows
       const doneTo = nodeX(activeStage);
-      ctx.strokeStyle = "rgba(94, 234, 212, 0.5)";
+      ctx.strokeStyle = "rgba(238, 0, 0, 0.6)";
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.moveTo(nodeX(0), railY);
@@ -277,10 +277,10 @@ const DataCenterBG = () => {
         ctx.beginPath();
         ctx.arc(x, railY, r, 0, Math.PI * 2);
         ctx.fillStyle = done
-          ? "rgba(94, 234, 212, 0.95)"
-          : "rgba(120, 170, 190, 0.4)";
+          ? "rgba(238, 0, 0, 0.95)"
+          : "rgba(140, 95, 105, 0.45)";
         if (isActive) {
-          ctx.shadowColor = "rgba(94,234,212,0.9)";
+          ctx.shadowColor = "rgba(238,0,0,0.9)";
           ctx.shadowBlur = 16;
         }
         ctx.fill();
@@ -290,10 +290,10 @@ const DataCenterBG = () => {
         ctx.textAlign = "center";
         ctx.textBaseline = "bottom";
         ctx.fillStyle = isActive
-          ? "rgba(180, 255, 245, 0.95)"
+          ? "rgba(255, 210, 210, 0.95)"
           : done
-          ? "rgba(150, 220, 210, 0.7)"
-          : "rgba(150, 200, 215, 0.45)";
+          ? "rgba(255, 170, 170, 0.76)"
+          : "rgba(190, 145, 155, 0.45)";
         ctx.fillText(STAGES[i], x, railY - 12);
       }
       ctx.textBaseline = "alphabetic";
@@ -305,12 +305,12 @@ const DataCenterBG = () => {
       const bx = nodeX(i0) + (nodeX(i1) - nodeX(i0)) * frac;
       ctx.beginPath();
       ctx.arc(bx, railY, 5 * (1.6 + Math.sin(t * 8) * 0.3), 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(94, 234, 212, 0.18)";
+      ctx.fillStyle = "rgba(238, 0, 0, 0.2)";
       ctx.fill();
       ctx.beginPath();
       ctx.arc(bx, railY, 5, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(180, 255, 245, 0.98)";
-      ctx.shadowColor = "rgba(94,234,212,1)";
+      ctx.fillStyle = "rgba(255, 214, 214, 0.98)";
+      ctx.shadowColor = "rgba(238,0,0,1)";
       ctx.shadowBlur = 18;
       ctx.fill();
       ctx.shadowBlur = 0;
@@ -318,7 +318,7 @@ const DataCenterBG = () => {
       // small header label centred above the rail
       ctx.font = `700 10px Inter, system-ui, sans-serif`;
       ctx.textAlign = "center";
-      ctx.fillStyle = "rgba(94, 234, 212, 0.5)";
+      ctx.fillStyle = "rgba(238, 0, 0, 0.58)";
       ctx.fillText("CI / CD PIPELINE", w * 0.5, railY - 30);
 
       ctx.restore();
