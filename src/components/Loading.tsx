@@ -25,7 +25,7 @@ const TOTAL = 6.0;
 
 // Scene captions keyed by timeline progress (0..1).
 const SCENES: { at: number; label: string }[] = [
-  { at: 0.0, label: "Approaching the data center" },
+  { at: 0.0, label: "Initializing secure entry" },
   { at: 0.16, label: "Opening the entrance" },
   { at: 0.32, label: "Stepping inside" },
   { at: 0.48, label: "Walking the server aisle" },

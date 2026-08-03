@@ -24,7 +24,6 @@ const Landing = ({ children }: PropsWithChildren) => {
       <div className="landing-panel">
         <div className="landing-grid">
           <section className="landing-copy">
-            <p className="landing-eyebrow">Approaching the data center</p>
             <h2>Hello, I&apos;m</h2>
             <h1>
               GOPICHANDH
